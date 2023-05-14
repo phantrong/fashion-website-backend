@@ -1,0 +1,761 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "Laravel example"
+servers:
+  - url: http://localhost/api
+    description: Local
+paths:
+  /login:
+    post:
+      tags:
+        - "User"
+      summary: "Login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "hikaru@gmail.com"
+                password:
+                  type: string
+                  example: "chikuso"
+              required:
+                - email
+                - password
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.0PAvm2LNR0Z44KhBeJl8iH7gbeHJNfYj4TFyhyGk9YU"
+        401:
+          description: "Failure"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+  /users:
+    get:
+      tags:
+        - "User"
+      summary: "Get list of users"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: per_page
+          in: query
+          description: "Page size"
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+        - name: page
+          in: query
+          description: "Page"
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 3
+                      per_page:
+                        type: integer
+                        example: 10
+                      current_page:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            avatar:
+                              type: string
+                              nullable: true
+                            name:
+                              type: string
+                            gender:
+                              type: integer
+                              description: "0: Female, 1: Male"
+                            birthday:
+                              type: string
+                            email:
+                              type: string
+                        example:
+                          - id: "02774480-c102-11ea-a0fb-0654403b1a1a"
+                            avatar: null
+                            name: "Satou Hikaru"
+                            gender: 1
+                            birthday: "1997-01-22"
+                            email: "hikaru@gmail.com"
+                          - id: "02774480-c102-11ea-a0fb-0654403b1a2b"
+                            avatar: null
+                            name: "Sanada Yukimura"
+                            gender: 1
+                            birthday: "1997-06-03"
+                            email: "yukimura@gmail.com"
+                          - id: "02774480-c102-11ea-a0fb-0654403b1a3c"
+                            avatar: null
+                            name: "Kunoichi"
+                            gender: 0
+                            birthday: "1998-10-30"
+                            email: "kunoichi@gmail.com"
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+  /user/{userId}:
+    get:
+      tags:
+        - "User"
+      summary: "Get user detail"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+            default: "02774480-c102-11ea-a0fb-0654403b1a1a"
+          required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "02774480-c102-11ea-a0fb-0654403b1a1a"
+                      avatar:
+                        type: string
+                        nullable: true
+                        example: null
+                      name:
+                        type: string
+                        example: "Satou Hikaru"
+                      gender:
+                        type: integer
+                        description: "0: Female, 1: Male"
+                        example: 1
+                      birthday:
+                        type: string
+                        example: "1997-01-22"
+                      email:
+                        type: string
+                        example: "hikaru@gmail.com"
+                      certificates:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            invalid_year:
+                              type: integer
+                        example:
+                          - id: "02774480-c102-11ea-a0fb-0654403b3c1a"
+                            name: "Professional Scrum Master I"
+                            expiration_date: null
+                          - id: "02774480-c102-11ea-a0fb-0654403b3c2b"
+                            name: "Professional Scrum Master II"
+                            expiration_date: null
+                          - id: "02774480-c102-11ea-a0fb-0654403b3c3c"
+                            name: "Professional Scrum Master III"
+                            expiration_date: null
+                          - id: "02774480-c102-11ea-a0fb-0654403b3c4d"
+                            name: "Project Management Professional"
+                            expiration_date: "2032-09-29"
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        406:
+          description: "Not Acceptable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response406"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+    put:
+      tags:
+        - "User"
+      summary: "Update user"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+            default: "02774480-c102-11ea-a0fb-0654403b1a1a"
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  example: "https://laravel-example.s3.amazonaws.com/temp/2022-09-20/1663668288-Liverpool-logo.jpg"
+                name:
+                  type: string
+                  example: "Satou Hikaru"
+                gender:
+                  type: integer
+                  example: 1
+                  description: "0: Female, 1: Male"
+                birthday:
+                  type: string
+                  example: "1997-01-22"
+                email:
+                  type: string
+                  example: "hikaru@gmail.com"
+              required:
+                - avatar
+                - name
+                - gender
+                - birthday
+                - email
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response200"
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        406:
+          description: "Not Acceptable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response406"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+  /logout:
+    post:
+      tags:
+        - "User"
+      summary: "Logout"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response200"
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+  /certificates:
+    get:
+      tags:
+        - "Certificate"
+      summary: "Get list of certificates"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: per_page
+          in: query
+          description: "Page size"
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+        - name: page
+          in: query
+          description: "Page"
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 1
+                      per_page:
+                        type: integer
+                        example: 10
+                      current_page:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      certificates:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            invalid_year:
+                              type: integer
+                              nullable: true
+                        example:
+                          - id: "02774480-c102-11ea-a0fb-065440ab2b1a"
+                            name: "AWS Certified Solution Architect Associate"
+                            invalid_year: 3
+                          - id: "02774480-c102-11ea-a0fb-065440ab2b2b"
+                            name: "AWS Certified Solutions Architect Professional"
+                            invalid_year: 3
+                          - id: "02774480-c102-11ea-a0fb-065440ab2b3c"
+                            name: "Professional Scrum Master I"
+                            invalid_year: null
+                          - id: "02774480-c102-11ea-a0fb-065440ab2b4d"
+                            name: "Professional Scrum Master II"
+                            invalid_year: null
+                          - id: "02774480-c102-11ea-a0fb-065440ab2b5e"
+                            name: "Professional Scrum Master III"
+                            invalid_year: null
+                          - id: "02774480-c102-11ea-a0fb-065440ab2b6f"
+                            name: "Project Management Professional"
+                            invalid_year: 10
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+  /certificates/{id}:
+    get:
+      tags:
+        - "Certificate"
+      summary: "Get certificate detail"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+            example: "02774480-c102-11ea-a0fb-065440ab2b6f"
+          required: true
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "02774480-c102-11ea-a0fb-065440ab2b6f"
+                      name:
+                        type: string
+                        example: "Project Management Professional"
+                      invalid_year:
+                        type: integer
+                        nullable: true
+                        example: 10
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        406:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response406"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+  /upload-file:
+    post:
+      tags:
+        - "File"
+      summary: "Upload file"
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                type:
+                  type: integer
+                  description: "1: All extension file, 2: Image extension file"
+                  enum: [1, 2]
+              required:
+                - file
+                - type
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      url_file:
+                        type: string
+                        example: "https://laravel-example.s3.amazonaws.com/temp/2022-09-20/1663668288-Liverpool-logo.jpg"
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response401"
+        403:
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response403"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response404"
+        405:
+          description: "Method Not Allowed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response405"
+        500:
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response500"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Response200:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: true
+        message:
+          type: string
+          example: "Success"
+    Response401:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
+          example: "Unauthorized"
+    Response403:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
+          example: "Forbidden"
+    Response404:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
+          example: "Not Found"
+    Response405:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
+          example: "Method Not Allowed"
+    Response406:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
+          example: "Not Acceptable"
+    Response500:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
+          example: "Internal Server Error"
