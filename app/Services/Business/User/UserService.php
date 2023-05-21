@@ -3,7 +3,6 @@
 namespace App\Services\Business\User;
 
 use App\Enum\CommonEnum;
-use App\Enum\GroupEnum;
 use App\Enum\UserEnum;
 use App\Helpers\PaginationHelper;
 use App\Repositories\Repository;
@@ -46,15 +45,10 @@ class UserService implements UserServiceInterface
      */
     public function getDetail($id)
     {
-        $user = Repository::getUser()->getUserDetail([
-            'id' => $id,
-            'relate_certificates' => true,
-        ], UserEnum::COLUMNS_SELECT);
+        $user = Repository::getUser()->getUserDetail([], UserEnum::COLUMNS_SELECT);
         if (!$user) {
             return null;
         }
-
-        $this->formatUserCertificate($user);
 
         return $user;
     }
@@ -106,17 +100,5 @@ class UserService implements UserServiceInterface
         Repository::getInvalidToken()->create([
             'token' => $token,
         ]);
-    }
-
-    /**
-     * Format user certificate.
-     *
-     * @param $user
-     */
-    private function formatUserCertificate($user)
-    {
-        foreach ($user->certificates as $certificate) {
-            unset($certificate->pivot);
-        }
     }
 }

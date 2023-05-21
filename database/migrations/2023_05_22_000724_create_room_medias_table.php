@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('certificates', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name', 100);
-            $table->integer('invalid_year')->nullable();
+        Schema::create('room_medias', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('room_id')->unsigned();
+            $table->string('link', 1000);
+            $table->tinyInteger('type')->comment('1: image, 2: video');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('room_id')->references('id')->on('rooms');
         });
     }
 
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('certificates');
+        Schema::dropIfExists('room_medias');
     }
 };

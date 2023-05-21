@@ -2,14 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Certificate\CertificateRepository;
-use App\Repositories\Certificate\CertificateRepositoryInterface;
 use App\Repositories\InvalidToken\InvalidTokenRepository;
 use App\Repositories\InvalidToken\InvalidTokenRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\UserCertificate\UserCertificateRepository;
-use App\Repositories\UserCertificate\UserCertificateRepositoryInterface;
+use App\Repositories\Room\RoomRepository;
+use App\Repositories\Room\RoomRepositoryInterface;
 
 class Repository
 {
@@ -34,22 +32,12 @@ class Repository
     }
 
     /**
-     * Get CertificateRepository.
+     * Get RoomRepository.
      *
-     * @return CertificateRepository
+     * @return RoomRepository
      */
-    public static function getCertificate()
+    public static function getRoom()
     {
-        return app(CertificateRepositoryInterface::class);
-    }
-
-    /**
-     * Get UserCertificateRepository.
-     *
-     * @return UserCertificateRepository
-     */
-    public static function getUserCertificate()
-    {
-        return app(UserCertificateRepositoryInterface::class);
+        return app(RoomRepositoryInterface::class);
     }
 }

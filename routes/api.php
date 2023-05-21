@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +20,4 @@ Route::group([
     Route::get('users', [UserController::class, 'list'])->name('user.list');
     Route::get('user/{id}', [UserController::class, 'getDetail'])->name('user.detail');
     Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
-
-    /**
-     * Certificate
-     */
-    Route::get('certificates', [CertificateController::class, 'list'])->name('certificate.list');
 });

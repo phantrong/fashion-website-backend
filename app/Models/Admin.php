@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use App\Traits\UuidForKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class UserCertificate extends Model
+class Admin extends Model
 {
-    use UuidForKey, SoftDeletes, HasFactory;
+    use Notifiable, SoftDeletes, HasFactory, HasApiTokens;
 
     /**
      * @var string
      */
-    protected $table = 'user_certificate';
+    protected $table = 'admins';
 
     /**
      * The attributes that are mass assignable.
@@ -22,13 +23,13 @@ class UserCertificate extends Model
      * @var string[]
      */
     protected $fillable = [
-        'id',
-        'user_id',
-        'certificate_id',
-        'expiration_date',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'name',
+        'type',
+        'email',
+        'password',
+        'create_admin',
+        'update_admin',
+        'status',
     ];
 
     /**
@@ -37,6 +38,6 @@ class UserCertificate extends Model
      * @var array
      */
     protected $hidden = [
-        'deleted_at',
+        'password'
     ];
 }

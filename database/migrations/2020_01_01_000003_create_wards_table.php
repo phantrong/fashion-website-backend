@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateWardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invalid_tokens', function (Blueprint $table) {
+        Schema::create('wards', function (Blueprint $table) {
             $table->id();
-            $table->text('token');
+            $table->string('name');
+            $table->string('gso_id');
+            $table->bigInteger('district_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('district_id')
+                ->references('id')
+                ->on('districts')
+                ->cascadeOnDelete();
         });
     }
 
@@ -27,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invalid_tokens');
+        Schema::dropIfExists('wards');
     }
-};
+}

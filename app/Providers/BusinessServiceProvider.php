@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\Business\Certificate\CertificateService;
-use App\Services\Business\Certificate\CertificateServiceInterface;
 use App\Services\Business\User\UserService;
 use App\Services\Business\User\UserServiceInterface;
+use App\Services\Business\Room\RoomService;
+use App\Services\Business\Room\RoomServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class BusinessServiceProvider extends ServiceProvider
@@ -22,8 +22,8 @@ class BusinessServiceProvider extends ServiceProvider
             UserService::class
         );
         $this->app->bind(
-            CertificateServiceInterface::class,
-            CertificateService::class
+            RoomServiceInterface::class,
+            RoomService::class
         );
     }
 }

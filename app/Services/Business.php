@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Services\Business\Certificate\CertificateService;
-use App\Services\Business\Certificate\CertificateServiceInterface;
 use App\Services\Business\User\UserService;
 use App\Services\Business\User\UserServiceInterface;
+use App\Services\Business\Room\RoomService;
+use App\Services\Business\Room\RoomServiceInterface;
 
 class Business
 {
@@ -20,12 +20,12 @@ class Business
     }
 
     /**
-     * Get CertificateService.
+     * Get RoomService.
      *
-     * @return CertificateService
+     * @return RoomService
      */
-    public static function getCertificate()
+    public static function getRoom()
     {
-        return app(CertificateServiceInterface::class);
+        return app(RoomServiceInterface::class);
     }
 }

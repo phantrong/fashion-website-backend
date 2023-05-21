@@ -13,10 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invalid_tokens', function (Blueprint $table) {
+        Schema::create('room_housewares', function (Blueprint $table) {
             $table->id();
-            $table->text('token');
+            $table->bigInteger('room_id')->unsigned();
+            $table->bigInteger('houseware_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->foreign('houseware_id')->references('id')->on('housewares');
         });
     }
 
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invalid_tokens');
+        Schema::dropIfExists('room_housewares');
     }
 };
