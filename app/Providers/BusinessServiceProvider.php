@@ -2,10 +2,20 @@
 
 namespace App\Providers;
 
+use App\Services\Business\Admin\AdminService;
+use App\Services\Business\Admin\AdminServiceInterface;
+use App\Services\Business\District\DistrictService;
+use App\Services\Business\District\DistrictServiceInterface;
+use App\Services\Business\Houseware\HousewareService;
+use App\Services\Business\Houseware\HousewareServiceInterface;
+use App\Services\Business\Province\ProvinceService;
+use App\Services\Business\Province\ProvinceServiceInterface;
 use App\Services\Business\User\UserService;
 use App\Services\Business\User\UserServiceInterface;
 use App\Services\Business\Room\RoomService;
 use App\Services\Business\Room\RoomServiceInterface;
+use App\Services\Business\Ward\WardService;
+use App\Services\Business\Ward\WardServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class BusinessServiceProvider extends ServiceProvider
@@ -24,6 +34,26 @@ class BusinessServiceProvider extends ServiceProvider
         $this->app->bind(
             RoomServiceInterface::class,
             RoomService::class
+        );
+        $this->app->bind(
+            ProvinceServiceInterface::class,
+            ProvinceService::class
+        );
+        $this->app->bind(
+            DistrictServiceInterface::class,
+            DistrictService::class
+        );
+        $this->app->bind(
+            WardServiceInterface::class,
+            WardService::class
+        );
+        $this->app->bind(
+            HousewareServiceInterface::class,
+            HousewareService::class
+        );
+        $this->app->bind(
+            AdminServiceInterface::class,
+            AdminService::class
         );
     }
 }

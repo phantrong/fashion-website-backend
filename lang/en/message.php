@@ -10,4 +10,7 @@ return [
         '406' => 'Not Acceptable',
         '500' => 'Internal Server Error',
     ],
+    'common_error' => [
+        'not_item' => 'B001',
+    ],
 ];

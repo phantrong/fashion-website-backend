@@ -24,4 +24,14 @@ interface ResponseFactoryInterface
      * @return JsonResponse
      */
     public function error($message, int $statusCode = JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+
+    /**
+     * Make the error response.
+     *
+     * @param $code
+     * @param int $statusCode
+     * @param array $data
+     * @return JsonResponse
+     */
+    public function errorCode($code, int $statusCode = JsonResponse::HTTP_INTERNAL_SERVER_ERROR, $data = []);
 }

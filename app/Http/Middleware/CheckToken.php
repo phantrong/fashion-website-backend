@@ -8,6 +8,7 @@ use Closure;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CheckToken
 {
@@ -21,6 +22,7 @@ class CheckToken
      */
     public function handle(Request $request, Closure $next)
     {
+        $userRole = $request->header('user_role');
         $token = $request->bearerToken();
         if (!$token) {
             return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
@@ -30,7 +32,7 @@ class CheckToken
             'token' => $token,
         ]);
         if (!$invalidToken) {
-            $payload = Service::getJWT()->decode($token);
+            $payload = Service::getJWT()->decode($token, $userRole);
             if ($payload && $payload->exp >= time()) {
                 return $next($request);
             }

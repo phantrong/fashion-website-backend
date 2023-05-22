@@ -225,4 +225,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
         return $query;
     }
+
+    public function find($id)
+    {
+        return $this->model->find($id);
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
 }

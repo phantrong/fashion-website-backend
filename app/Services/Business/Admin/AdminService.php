@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Services\Business\User;
+namespace App\Services\Business\Admin;
 
 use App\Enum\CommonEnum;
-use App\Enum\UserEnum;
+use App\Enum\AdminEnum;
 use App\Helpers\PaginationHelper;
-use App\Models\User;
+use App\Models\Admin;
 use App\Repositories\Repository;
 use App\Services\Business\BasesBusiness;
 use App\Services\Service;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 
-class UserService extends BasesBusiness implements UserServiceInterface
+class AdminService extends BasesBusiness implements AdminServiceInterface
 {
     protected $model;
     protected $repository;
 
-    public function __construct(User $user)
+    public function __construct(Admin $admin)
     {
-        $this->model = $user;
-        $this->repository = Repository::getUser();
+        $this->model = $admin;
+        $this->repository = Repository::getAdmin();
     }
 
     /**
@@ -30,11 +31,11 @@ class UserService extends BasesBusiness implements UserServiceInterface
      */
     public function createToken(array $input)
     {
-        return Service::getJWT()->encode($input, CommonEnum::USER_ROLE_USER);
+        return Service::getJWT()->encode($input, CommonEnum::USER_ROLE_ADMIN);
     }
 
     /**
-     * List all users.
+     * List all admins.
      *
      * @param array $condition
      * @return array
@@ -42,25 +43,25 @@ class UserService extends BasesBusiness implements UserServiceInterface
     public function getList(array $condition)
     {
         [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
-        $users = Repository::getUser()->getListPagination($condition, UserEnum::COLUMNS_SELECT);
+        $admins = Repository::getAdmin()->getListPagination($condition, AdminEnum::COLUMNS_SELECT);
 
-        return PaginationHelper::formatPagination($users, 'users');
+        return PaginationHelper::formatPagination($admins, 'admins');
     }
 
     /**
-     * Get user detail.
+     * Get admin detail.
      *
      * @param $id
      * @return Model
      */
     public function getDetail($id)
     {
-        $user = Repository::getUser()->getUserDetail([], UserEnum::COLUMNS_SELECT);
-        if (!$user) {
+        $admin = Repository::getAdmin()->getAdminDetail([], AdminEnum::COLUMNS_SELECT);
+        if (!$admin) {
             return null;
         }
 
-        return $user;
+        return $admin;
     }
 
     /**

@@ -120,4 +120,19 @@ interface BaseRepositoryInterface
      * @return mixed
      */
     public function delete(array $condition);
+
+    /**
+     * find
+     *
+     * @param  int $id
+     * @return object
+     */
+    public function find($id);
+
+    /**
+     * getModel
+     *
+     * @return mixed
+     */
+    public function getModel();
 }

@@ -2,12 +2,22 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\InvalidToken\InvalidTokenRepository;
 use App\Repositories\InvalidToken\InvalidTokenRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Room\RoomRepository;
 use App\Repositories\Room\RoomRepositoryInterface;
+use App\Repositories\District\DistrictRepository;
+use App\Repositories\District\DistrictRepositoryInterface;
+use App\Repositories\Houseware\HousewareRepository;
+use App\Repositories\Houseware\HousewareRepositoryInterface;
+use App\Repositories\Province\ProvinceRepository;
+use App\Repositories\Province\ProvinceRepositoryInterface;
+use App\Repositories\Ward\WardRepository;
+use App\Repositories\Ward\WardRepositoryInterface;
 
 class Repository
 {
@@ -39,5 +49,55 @@ class Repository
     public static function getRoom()
     {
         return app(RoomRepositoryInterface::class);
+    }
+
+    /**
+     * Get ProvinceRepository.
+     *
+     * @return ProvinceRepository
+     */
+    public static function getProvince()
+    {
+        return app(ProvinceRepositoryInterface::class);
+    }
+
+    /**
+     * Get DistrictRepository.
+     *
+     * @return DistrictRepository
+     */
+    public static function getDistrict()
+    {
+        return app(DistrictRepositoryInterface::class);
+    }
+
+    /**
+     * Get WardRepository.
+     *
+     * @return WardRepository
+     */
+    public static function getWard()
+    {
+        return app(WardRepositoryInterface::class);
+    }
+
+    /**
+     * Get HousewareRepository.
+     *
+     * @return HousewareRepository
+     */
+    public static function getHouseware()
+    {
+        return app(HousewareRepositoryInterface::class);
+    }
+
+    /**
+     * Get AdminRepository.
+     *
+     * @return AdminRepository
+     */
+    public static function getAdmin()
+    {
+        return app(AdminRepositoryInterface::class);
     }
 }

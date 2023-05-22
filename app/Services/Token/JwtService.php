@@ -2,6 +2,7 @@
 
 namespace App\Services\Token;
 
+use App\Enum\CommonEnum;
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -16,11 +17,11 @@ class JwtService implements JwtServiceInterface
      * @param array $data
      * @return string
      */
-    public function encode(array $data)
+    public function encode(array $data, $userRole = CommonEnum::USER_ROLE_USER)
     {
         $url = config('app.url');
         $expireTime = config('jwt.expire_time');
-        $key = config('jwt.key');
+        $key = $this->getKeyJwt($userRole);
         $algorithm = config('jwt.algorithm');
 
         $payload = [
@@ -42,10 +43,10 @@ class JwtService implements JwtServiceInterface
      * @return mixed
      * @throws Exception
      */
-    public function decode($token)
+    public function decode($token, $userRole = CommonEnum::USER_ROLE_USER)
     {
         try {
-            $key = config('jwt.key');
+            $key = $this->getKeyJwt($userRole);
             $algorithm = config('jwt.algorithm');
 
             return JWT::decode($token, new Key($key, $algorithm));
@@ -55,5 +56,37 @@ class JwtService implements JwtServiceInterface
             ]);
             throw new AuthenticationException();
         }
+    }
+
+    public function getUserInfo($token, $userRole = CommonEnum::USER_ROLE_USER)
+    {
+        try {
+            $key = $this->getKeyJwt($userRole);
+            $algorithm = config('jwt.algorithm');
+
+            return JWT::decode($token, new Key($key, $algorithm))->sub->dat;
+        } catch (Exception $exception) {
+            Log::error('[Authenticate]', [
+                "{$exception->getMessage()} - {$exception->getFile()} - {$exception->getLine()}",
+            ]);
+            throw new AuthenticationException();
+        }
+    }
+
+    /**
+     * @param  int $useRole
+     * @return string
+     */
+    private function getKeyJwt($userRole)
+    {
+        switch ($userRole) {
+            case CommonEnum::USER_ROLE_ADMIN:
+                $key = config('jwt.admin_key');
+                break;
+            default:
+                $key = config('jwt.key');
+                break;
+        }
+        return $key;
     }
 }

@@ -44,6 +44,28 @@ class ResponseFactory implements ResponseFactoryInterface
     }
 
     /**
+     * Make the error response.
+     *
+     * @param $message
+     * @param int $status
+     * @param array $data
+     * @return ResponseFactory|Response
+     */
+    public function errorCode($code, int $status = JsonResponse::HTTP_INTERNAL_SERVER_ERROR, $data = [])
+    {
+
+        $response = [
+            'success' => false,
+            'code' => $code,
+        ];
+        if ($data) {
+            $response['data'] = $data;
+        }
+
+        return $this->make($response, $status);
+    }
+
+    /**
      * Make the response.
      *
      * @param mixed $data

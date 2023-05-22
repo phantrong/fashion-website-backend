@@ -20,4 +20,7 @@ class CommonEnum
     const MASKED_KEY = [
         'password',
     ];
+
+    const USER_ROLE_ADMIN = 1;
+    const USER_ROLE_USER = 2;
 }
