@@ -28,6 +28,7 @@ return new class extends Migration
             $table->bigInteger('room_type_id')->unsigned();
             $table->mediumText('more_description')->nullable();
             $table->tinyInteger('status')->default(0)->comment('1: show, 0: hidden');
+            $table->bigInteger('admin_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
 
@@ -35,6 +36,7 @@ return new class extends Migration
             $table->foreign('district_id')->references('id')->on('districts');
             $table->foreign('ward_id')->references('id')->on('wards');
             $table->foreign('room_type_id')->references('id')->on('room_types');
+            $table->foreign('admin_id')->references('id')->on('admins');
         });
     }
 

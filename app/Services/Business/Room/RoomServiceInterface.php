@@ -17,8 +17,9 @@ interface RoomServiceInterface
     /**
      * Get room detail.
      *
-     * @param $id
+     * @param array $condition
+     * @param int $id
      * @return Model
      */
-    public function getDetail($id);
+    public function getDetail($condition, $id);
 }

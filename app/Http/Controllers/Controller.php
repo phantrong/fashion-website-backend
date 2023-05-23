@@ -22,4 +22,20 @@ class Controller extends BaseController
     {
         return Service::response();
     }
+
+    public function getUserRole($request)
+    {
+        return $request->header('user_role');
+    }
+
+    /**
+     *
+     * @param  Request $request
+     * @return object
+     */
+    public function getAuth($request)
+    {
+        $token = $request->bearerToken();
+        return Service::getJWT()->getUserInfo($token, $this->getUserRole($request));
+    }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HousewareController;
+use App\Http\Controllers\RoomController;
 use App\Http\Middleware\Adminer;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,16 @@ Route::group([
             Route::post('create', 'create')->name('create');
             Route::post('{id}', 'update')->name('update');
             Route::delete('{id}', 'delete')->name('delete');
+        });
+
+    Route::controller(RoomController::class)
+        ->prefix('room')
+        ->name('room.')
+        ->group(function () {
+            Route::get('list', 'getListByAdmin')->name('admin.list');
+            Route::get('{id}', 'getDetailByAdmin')->name('admin.detail');
+            Route::post('create', 'createByAdmin')->name('admin.create');
+            Route::post('{id}', 'updateByAdmin')->name('admin.update');
+            Route::delete('{id}', 'deleteByAdmin')->name('admin.delete');
         });
 });

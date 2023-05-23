@@ -16,6 +16,10 @@ use App\Services\Business\Province\ProvinceService;
 use App\Services\Business\Province\ProvinceServiceInterface;
 use App\Services\Business\Ward\WardService;
 use App\Services\Business\Ward\WardServiceInterface;
+use App\Services\Business\RoomHouseware\RoomHousewareService;
+use App\Services\Business\RoomHouseware\RoomHousewareServiceInterface;
+use App\Services\Business\RoomMedia\RoomMediaService;
+use App\Services\Business\RoomMedia\RoomMediaServiceInterface;
 
 class Business
 {
@@ -87,5 +91,25 @@ class Business
     public static function getAdmin()
     {
         return app(AdminServiceInterface::class);
+    }
+
+    /**
+     * Get RoomHousewareService.
+     *
+     * @return RoomHousewareService
+     */
+    public static function getRoomHouseware()
+    {
+        return app(RoomHousewareServiceInterface::class);
+    }
+
+    /**
+     * Get RoomMediaService.
+     *
+     * @return RoomMediaService
+     */
+    public static function getRoomMedia()
+    {
+        return app(RoomMediaServiceInterface::class);
     }
 }

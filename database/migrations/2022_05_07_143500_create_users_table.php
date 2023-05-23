@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('birthday');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->tinyInteger('status')->default(1)->comment('1: new, 2: active, 3: block');
             $table->tinyInteger('notifications_email')->default(1)->comment('0: no, 1: yes');

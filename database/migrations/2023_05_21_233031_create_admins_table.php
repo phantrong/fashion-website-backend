@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->tinyInteger('type')->default(0)->comment('1: root, 0: not root');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->tinyInteger('status')->default(1)->comment('1: new, 2: active, 3: block');
             $table->bigInteger('create_admin')->nullable()->unsigned();

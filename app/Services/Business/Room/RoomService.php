@@ -37,12 +37,13 @@ class RoomService extends BasesBusiness implements RoomServiceInterface
     /**
      * Get room detail.
      *
-     * @param $id
+     * @param array $condition
+     * @param int $id
      * @return Model
      */
-    public function getDetail($id)
+    public function getDetail($condition, $id)
     {
-        $room = Repository::getRoom()->getRoomDetail([], RoomEnum::COLUMNS_SELECT);
+        $room = Repository::getRoom()->getRoomDetail($condition, RoomEnum::COLUMNS_SELECT);
         if (!$room) {
             return null;
         }

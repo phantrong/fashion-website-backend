@@ -14,6 +14,10 @@ use App\Repositories\Province\ProvinceRepository;
 use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\Room\RoomRepository;
 use App\Repositories\Room\RoomRepositoryInterface;
+use App\Repositories\RoomHouseware\RoomHousewareRepository;
+use App\Repositories\RoomHouseware\RoomHousewareRepositoryInterface;
+use App\Repositories\RoomMedia\RoomMediaRepository;
+use App\Repositories\RoomMedia\RoomMediaRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Ward\WardRepository;
@@ -60,6 +64,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             AdminRepositoryInterface::class,
             AdminRepository::class
+        );
+        $this->app->singleton(
+            RoomHousewareRepositoryInterface::class,
+            RoomHousewareRepository::class
+        );
+        $this->app->singleton(
+            RoomMediaRepositoryInterface::class,
+            RoomMediaRepository::class
         );
     }
 }

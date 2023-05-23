@@ -18,6 +18,10 @@ use App\Repositories\Province\ProvinceRepository;
 use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\Ward\WardRepository;
 use App\Repositories\Ward\WardRepositoryInterface;
+use App\Repositories\RoomHouseware\RoomHousewareRepository;
+use App\Repositories\RoomHouseware\RoomHousewareRepositoryInterface;
+use App\Repositories\RoomMedia\RoomMediaRepository;
+use App\Repositories\RoomMedia\RoomMediaRepositoryInterface;
 
 class Repository
 {
@@ -99,5 +103,25 @@ class Repository
     public static function getAdmin()
     {
         return app(AdminRepositoryInterface::class);
+    }
+
+    /**
+     * Get RoomHousewareRepository.
+     *
+     * @return RoomHousewareRepository
+     */
+    public static function getRoomHouseware()
+    {
+        return app(RoomHousewareRepositoryInterface::class);
+    }
+
+    /**
+     * Get RoomMediaRepository.
+     *
+     * @return RoomMediaRepository
+     */
+    public static function getRoomMedia()
+    {
+        return app(RoomMediaRepositoryInterface::class);
     }
 }
