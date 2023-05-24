@@ -126,7 +126,11 @@ class FileService implements FileServiceInterface
         $fileSystemDisk = config('filesystems.default');
         $filePathFrom = substr($filePath, strlen(config("filesystems.disks.$fileSystemDisk.url")));
         $filePathTo = Str::replace($oldFolder, $newFolder, $filePathFrom);
-        Service::getFile()->move($filePathFrom, $filePathTo);
+        if (Service::getFile()->move($filePathFrom, $filePathTo)) {
+            $domainFileUrl = config("filesystems.disks.$fileSystemDisk.url");
+
+            return $domainFileUrl . $filePathTo;
+        }
     }
 
     /**

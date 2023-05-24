@@ -23,4 +23,9 @@ class Province extends Model
         'name',
         'gso_id',
     ];
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }

@@ -20,18 +20,14 @@ class RoomService extends BasesBusiness implements RoomServiceInterface
         $this->repository = Repository::getRoom();
     }
 
-    /**
-     * List all rooms.
-     *
-     * @param array $condition
-     * @return array
-     */
-    public function getList(array $condition)
+    public function getListByAdmin(array $condition = [])
     {
-        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
-        $rooms = Repository::getRoom()->getListPagination($condition, RoomEnum::COLUMNS_SELECT);
+        return $this->repository->getListByAdmin($condition);
+    }
 
-        return PaginationHelper::formatPagination($rooms, 'rooms');
+    public function getDetailByAdmin($id, array $condition = [])
+    {
+        return $this->repository->getDetailByAdmin($id, $condition);
     }
 
     /**

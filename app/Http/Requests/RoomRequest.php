@@ -3,20 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Enum\RoomMediaEnum;
-use Illuminate\Foundation\Http\FormRequest;
 
-class RoomRequest extends FormRequest
+class RoomRequest extends BaseFormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -37,10 +26,10 @@ class RoomRequest extends FormRequest
             'cost' => 'nullable|integer|digits_between:0,18',
             'acreage' => 'required|integer|digits_between:0,18',
             'max_people_allowed' => 'nullable|integer|digits_between:0,3',
-            'room_type_id' => 'required|exists:room_types,id,deleted_at,null',
+            'room_type_id' => 'required|exists:room_types,id,deleted_at,NULL',
             'more_description' => 'nullable|max:10000',
             'status' => 'nullable|in:0,1',
-            'room_housewares.*.houseware_id' => 'required|exists:housewares,id,deleted_at,null',
+            'room_housewares.*.houseware_id' => 'required|exists:housewares,id,deleted_at,NULL',
             'room_housewares.*.id' => "nullable|exists:room_housewares,id,room_id,$id",
             'room_medias' => 'required',
             'room_medias.*.id' => "nullable|exists:room_medias,id,room_id,$id",

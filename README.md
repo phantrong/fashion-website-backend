@@ -1,7 +1,9 @@
 ## Requirement
+
 Docker (version >=20.10)
 
 ## Setup Laravel environment
+
 ```bash
 cp .env.example .env
 
@@ -18,4 +20,6 @@ php artisan key:generate
 php artisan config:clear
 php artisan config:cache
 php artisan optimize
+php artisan db:seed
+php artisan vietnamzone:import
 ```

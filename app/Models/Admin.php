@@ -40,4 +40,9 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }

@@ -23,9 +23,5 @@ class RoomTypeSeeder extends Seeder
         RoomType::create([
             'name' => 'Chung cư mini'
         ]);
-
-        RoomType::create([
-            'name' => 'Phòng trọ ở ghép'
-        ]);
     }
 }

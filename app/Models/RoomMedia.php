@@ -25,4 +25,9 @@ class RoomMedia extends Model
         'link',
         'type',
     ];
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }

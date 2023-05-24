@@ -7,12 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 interface RoomServiceInterface
 {
     /**
-     * List all rooms.
+     * List all rooms by admin
      *
      * @param array $condition
-     * @return array
+     * @return object
      */
-    public function getList(array $condition);
+    public function getListByAdmin(array $condition);
+
+    /**
+     * getDetailByAdmin
+     *
+     * @param  int $id
+     * @param  array $condition
+     * @return object
+     */
+    public function getDetailByAdmin($id, array $condition = []);
 
     /**
      * Get room detail.

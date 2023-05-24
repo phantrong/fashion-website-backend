@@ -40,8 +40,6 @@ RUN apt-get install -y \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends openssl libssl-dev libcurl4-openssl-dev \
-    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-    && echo "upload_max_filesize = 20M" >> /usr/local/etc/php/php.ini \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

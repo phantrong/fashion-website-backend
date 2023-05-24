@@ -23,4 +23,14 @@ class Houseware extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function rooms()
+    {
+        return $this->belongsToMany(
+            Room::class,
+            'room_housewares',
+            'houseware_id',
+            'room_id'
+        )->whereNull('room_housewares.deleted_at');
+    }
 }

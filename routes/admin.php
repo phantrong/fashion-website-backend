@@ -34,8 +34,9 @@ Route::group([
         ->group(function () {
             Route::get('list', 'getListByAdmin')->name('admin.list');
             Route::get('{id}', 'getDetailByAdmin')->name('admin.detail');
+            Route::post('upload-media', 'uploadMedia')->name('admin.upload.media');
             Route::post('create', 'createByAdmin')->name('admin.create');
-            Route::post('{id}', 'updateByAdmin')->name('admin.update');
+            Route::post('update/{id}', 'updateByAdmin')->name('admin.update');
             Route::delete('{id}', 'deleteByAdmin')->name('admin.delete');
         });
 });

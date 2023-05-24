@@ -7,7 +7,9 @@ class CommonEnum
     const DEFAULT_PER_PAGE = 10;
     const DEFAULT_PAGE = 1;
 
-    const FOLDER_TEMP = 'temp';
+    const FOLDER_TEMP = 'public/temp';
+    const FOLDER_TEMP_MEDIA = 'public/temp/media';
+    const FOLDER_MEDIA = 'public/media';
     const FOLDER_USER = 'user';
 
     const VALIDATION_RESPONSE_TYPE_KEY = 'key';
