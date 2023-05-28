@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enum\CommonEnum;
 use App\Repositories\Repository;
 use App\Services\Service;
 use Closure;
@@ -22,14 +23,14 @@ class CheckToken
      */
     public function handle(Request $request, Closure $next)
     {
-        $userRole = $request->header('user_role');
+        $userRole = $request->header('user_role') ?? CommonEnum::USER_ROLE_USER;
         $token = $request->bearerToken();
         if (!$token) {
             return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
         }
-
         $invalidToken = Repository::getInvalidToken()->exists([
             'token' => $token,
+            'user_role' => $userRole,
         ]);
         if (!$invalidToken) {
             $payload = Service::getJWT()->decode($token, $userRole);
@@ -37,7 +38,6 @@ class CheckToken
                 return $next($request);
             }
         }
-
         return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
     }
 }

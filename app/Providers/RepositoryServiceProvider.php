@@ -20,6 +20,8 @@ use App\Repositories\RoomMedia\RoomMediaRepository;
 use App\Repositories\RoomMedia\RoomMediaRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Verify\VerifyRepository;
+use App\Repositories\Verify\VerifyRepositoryInterface;
 use App\Repositories\Ward\WardRepository;
 use App\Repositories\Ward\WardRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -72,6 +74,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             RoomMediaRepositoryInterface::class,
             RoomMediaRepository::class
+        );
+        $this->app->singleton(
+            VerifyRepositoryInterface::class,
+            VerifyRepository::class
         );
     }
 }

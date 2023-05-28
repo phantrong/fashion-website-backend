@@ -1,0 +1,12 @@
+FROM php:8-fpm
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql
+
+# Install supervisord
+RUN apt-get update && apt-get install -y supervisor
+
+# # Add supervisord config
+COPY supervisord/supervisord.conf /etc/supervisor/supervisord.conf
+
+ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/supervisord.conf

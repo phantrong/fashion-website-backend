@@ -33,4 +33,7 @@ return [
 
     'validation_response_type' => env('VALIDATION_RESPONSE_TYPE', 'key'),
 
+    'mail_contact' => env('MAIL_CONTACT', 'contact@example.com'),
+    'link_service_front_admin' => env('LINK_SERVICE_FRONT_ADMIN', 'localhost'),
+    'link_service_front_user' => env('LINK_SERVICE_FRONT_USER', 'localhost'),
 ];

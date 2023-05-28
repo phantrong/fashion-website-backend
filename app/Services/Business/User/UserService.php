@@ -72,6 +72,19 @@ class UserService extends BasesBusiness implements UserServiceInterface
     {
         Repository::getInvalidToken()->create([
             'token' => $token,
+            'user_role' => CommonEnum::USER_ROLE_USER,
         ]);
+    }
+
+    public function getUserByEmail($email)
+    {
+        $user = Repository::getUser()->getUserDetail([
+            'email' => $email
+        ], UserEnum::COLUMNS_SELECT);
+        if (!$user) {
+            return null;
+        }
+
+        return $user;
     }
 }

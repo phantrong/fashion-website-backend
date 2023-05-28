@@ -6,19 +6,21 @@ class UserEnum
 {
     const TABLE = 'users';
 
-    const GENDER_MALE = 1;
-    const GENDER_FEMALE = 2;
-    const GENDER = [
-        self::GENDER_MALE,
-        self::GENDER_FEMALE,
+    const STATUS_NEW = 1;
+    const STATUS_ACTIVE = 2;
+    const STATUS_BLOCK = 3;
+    const STATUS = [
+        self::STATUS_NEW,
+        self::STATUS_ACTIVE,
+        self::STATUS_BLOCK,
     ];
 
     const COLUMNS_SELECT = [
         'id',
-        'avatar',
-        'name',
-        'gender',
+        'first_name',
+        'last_name',
         'birthday',
-        'email',
+        'status',
+        'notifications_email',
     ];
 }

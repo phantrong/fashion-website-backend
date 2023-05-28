@@ -36,4 +36,12 @@ interface UserServiceInterface
      * @param string $token
      */
     public function destroyToken(string $token);
+
+    /**
+     * getUserByEmail
+     *
+     * @param  string $email
+     * @return object
+     */
+    public function getUserByEmail($email);
 }

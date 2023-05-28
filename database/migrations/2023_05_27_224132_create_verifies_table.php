@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invalid_tokens', function (Blueprint $table) {
+        Schema::create('verifies', function (Blueprint $table) {
             $table->id();
-            $table->text('token');
-            $table->tinyInteger('user_role')->comment('1: admin, 2: user');
+            $table->string('email_phone')->comment('email or phone');
+            $table->string('code_verify');
+            $table->tinyInteger('type')->default(1)->comment('1:first setting pwd, 2:change pwd');
+            $table->tinyInteger('user_role')->comment('1:admin, 2:user');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invalid_tokens');
+        Schema::dropIfExists('verifies');
     }
 };

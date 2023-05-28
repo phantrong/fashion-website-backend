@@ -73,6 +73,7 @@ class AdminService extends BasesBusiness implements AdminServiceInterface
     {
         Repository::getInvalidToken()->create([
             'token' => $token,
+            'user_role' => CommonEnum::USER_ROLE_ADMIN,
         ]);
     }
 }

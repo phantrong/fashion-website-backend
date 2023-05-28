@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InvalidToken extends Model
+class Verify extends Model
 {
     use HasFactory;
 
     /**
      * @var string
      */
-    protected $table = 'invalid_tokens';
+    protected $table = 'verifies';
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,9 @@ class InvalidToken extends Model
      * @var string[]
      */
     protected $fillable = [
-        'token',
+        'email_phone',
+        'code_verify',
+        'type',
         'user_role',
     ];
 }

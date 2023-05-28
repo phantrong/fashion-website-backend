@@ -120,9 +120,25 @@ return [
 
         'api' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/api.log'),
+            'path' => storage_path('logs/api/api.log'),
             'level' => 'info',
             'days' => 7,
+        ],
+
+        'send_email' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/send_email/send_email.log'),
+            'level' => 'info',
+            'days' => 7,
+            'permission' => 0640,
+        ],
+        
+        'email_verify' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/send_email/email_verify.log'),
+            'level' => 'info',
+            'days' => 7,
+            'permission' => 0640,
         ],
     ],
 
