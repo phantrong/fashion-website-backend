@@ -1,0 +1,28 @@
+    AuthAdmin:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          example: "Success"
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+            admin: '#/components/schemas/Admin'
+    AuthUser:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          example: "Success"
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+            user: '#/components/schemas/User'

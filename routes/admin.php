@@ -24,8 +24,8 @@ Route::group([
             Route::get('list', 'getList')->name('list');
             Route::get('{id}', 'getDetail')->name('detail');
             Route::post('create', 'create')->name('create');
-            Route::post('{id}', 'update')->name('update');
-            Route::delete('{id}', 'delete')->name('delete');
+            Route::post('update/{id}', 'update')->name('update');
+            Route::delete('delete/{id}', 'delete')->name('delete');
         });
 
     Route::controller(RoomController::class)
@@ -37,6 +37,6 @@ Route::group([
             Route::post('upload-media', 'uploadMedia')->name('admin.upload.media');
             Route::post('create', 'createByAdmin')->name('admin.create');
             Route::post('update/{id}', 'updateByAdmin')->name('admin.update');
-            Route::delete('{id}', 'deleteByAdmin')->name('admin.delete');
+            Route::delete('delete/{id}', 'deleteByAdmin')->name('admin.delete');
         });
 });

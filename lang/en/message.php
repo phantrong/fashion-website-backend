@@ -13,4 +13,11 @@ return [
     'common_error' => [
         'not_item' => 'B001',
     ],
+    'user' => [
+        'not_verify' => 'C001',
+        'blocked' => 'C002',
+    ],
+    'link' => [
+        'expired' => 'D001'
+    ],
 ];

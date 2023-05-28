@@ -1,0 +1,96 @@
+    responseSuccess:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          example: "Success"
+    Unauthorized:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          example: "Unauthorized"
+    Forbidden:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          example: "Forbidden"
+    Unprocessable:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: object
+          properties:
+            '{key}':
+              type: string
+              example: "{status_code}"
+              description:
+            A001:
+              type: string
+              example: "Required"
+            A002:
+              type: string
+              example: "Must be a valid email address"
+            A003:
+              type: string
+              example: "The record already exists or does not exist (invalid)"
+            A004:
+              type: string
+              example: "Duplicated"
+            A005:
+              type: string
+              example: "Must be a valid array"
+            A006:
+              type: string
+              example: "Must be in the value distance"
+            A007:
+              type: string
+              example: "Less than number of validate"
+            A008:
+              type: string
+              example: "Greater than the number of validate"
+            A009:
+              type: string
+              example: "Different"
+            A010:
+              type: string
+              example: "Must be numeric"
+            A011:
+              type: string
+              example: "Value greater than defined value"
+            A012:
+              type: string
+              example: "Value less than defined value"
+            A013:
+              type: string
+              example: "Same with available data"
+            A014:
+              type: string
+              example: "value must be between"
+            A015:
+              type: string
+              example: "format is invalid."
+            A016:
+              type: string
+              example: "The file is not in the correct format"
+            B001:
+              type: string
+              example: "No records found"
+            C001:
+              type: string
+              example: "Email is not verified"
+            C002:
+              type: string
+              example: "Account is blocked"
+            D001:
+              type: string
+              example: "Link is expired"

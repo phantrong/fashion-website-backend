@@ -43,6 +43,9 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             ->when(@$condition['admin_id'], function ($query) use ($condition, $roomTable) {
                 $query->where("$roomTable.admin_id", $condition['admin_id']);
             })
+            ->when(@$condition['key_word'], function ($query) use ($condition, $roomTable) {
+                $query->where("$roomTable.title", 'like', '%'. $condition['key_word']. '%');
+            })
             ->with([
                 'province:id,name',
                 'district:id,name',

@@ -26,10 +26,10 @@ class HousewareService extends BasesBusiness implements HousewareServiceInterfac
      * @param array $condition
      * @return array
      */
-    public function getList(array $condition)
+    public function getListByAdmin(array $condition)
     {
         [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
-        $housewares = Repository::getHouseware()->getListPagination($condition, HousewareEnum::COLUMNS_SELECT);
+        $housewares = Repository::getHouseware()->getListByAdmin($condition, HousewareEnum::COLUMNS_SELECT);
 
         return PaginationHelper::formatPagination($housewares, 'housewares');
     }

@@ -19,7 +19,10 @@ class HousewareController extends Controller
                 'per_page' => $request->per_page ?? $this->perpage,
                 'page' => $request->page ?? 1
             ];
-            $housewares = Business::getHouseware()->getList($conditions);
+            if ($request->key_word) {
+                $conditions['key_word'] = $request->key_word;
+            }
+            $housewares = Business::getHouseware()->getListByAdmin($conditions);
             return $this->response()->success($housewares);
         } catch (\Exception $exception) {
             Log::error(['getList Houseware']);

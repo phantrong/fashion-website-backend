@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enum\CommonEnum;
+use App\Enum\RoomEnum;
 use App\Http\Requests\FileMediaRequest;
 use App\Http\Requests\RoomRequest;
 use App\Services\Business;
@@ -26,7 +27,9 @@ class RoomController extends Controller
                 'page' => $request->page ?? 1,
                 'admin_id' => $auth->id
             ];
-
+            if ($request->key_word) {
+                $conditions['key_word'] = $request->key_word;
+            }
             $rooms = Business::getRoom()->getListByAdmin($conditions);
             return $this->response()->success($rooms);
         } catch (\Exception $exception) {
@@ -101,13 +104,15 @@ class RoomController extends Controller
             $room = Business::getRoom()->create($data);
 
             $roomHousewares = [];
-            foreach ($request->room_housewares as $houseware) {
-                $roomHousewares[] = [
-                    'houseware_id' => $houseware['houseware_id'],
-                    'room_id' => $room->id,
-                    'created_at' => getDateTimeNow(),
-                    'updated_at' => getDateTimeNow()
-                ];
+            if ($request->room_housewares) {
+                foreach ($request->room_housewares as $houseware) {
+                    $roomHousewares[] = [
+                        'houseware_id' => $houseware['houseware_id'],
+                        'room_id' => $room->id,
+                        'created_at' => getDateTimeNow(),
+                        'updated_at' => getDateTimeNow()
+                    ];
+                }
             }
             if (!empty($roomHousewares)) {
                 Business::getRoomHouseware()->insert($roomHousewares);
@@ -120,13 +125,15 @@ class RoomController extends Controller
                     CommonEnum::FOLDER_MEDIA,
                     CommonEnum::FOLDER_TEMP_MEDIA
                 );
-                $roomMedias[] = [
-                    'room_id' => $room->id,
-                    'link' => $urlFile,
-                    'type' => $media['type'],
-                    'created_at' => getDateTimeNow(),
-                    'updated_at' => getDateTimeNow()
-                ];
+                if (count($roomMedias) < RoomEnum::MAX_NUMBER_VIDEO_AND_IMAGE) {
+                    $roomMedias[] = [
+                        'room_id' => $room->id,
+                        'link' => $urlFile,
+                        'type' => $media['type'],
+                        'created_at' => getDateTimeNow(),
+                        'updated_at' => getDateTimeNow()
+                    ];
+                }
             }
             if (!empty($roomMedias)) {
                 Business::getRoomMedia()->insert($roomMedias);
@@ -178,24 +185,26 @@ class RoomController extends Controller
             $room->update($data);
 
             $roomHousewares = [];
-            foreach ($request->room_housewares as $houseware) {
-                if (@$houseware['id'] && @$houseware['deleted_at']) {
-                    Business::getRoomHouseware()->delete(['id' => $houseware['id']]);
-                } elseif (@$houseware['id']) {
-                    Business::getRoomHouseware()->update(
-                        ['id' => $houseware['id']],
-                        [
+            if ($request->room_housewares) {
+                foreach ($request->room_housewares as $houseware) {
+                    if (@$houseware['id'] && @$houseware['deleted_at']) {
+                        Business::getRoomHouseware()->delete(['id' => $houseware['id']]);
+                    } elseif (@$houseware['id']) {
+                        Business::getRoomHouseware()->update(
+                            ['id' => $houseware['id']],
+                            [
+                                'houseware_id' => $houseware['houseware_id'],
+                                'updated_at' => getDateTimeNow()
+                            ]
+                        );
+                    } else {
+                        $roomHousewares[] = [
                             'houseware_id' => $houseware['houseware_id'],
+                            'room_id' => $room->id,
+                            'created_at' => getDateTimeNow(),
                             'updated_at' => getDateTimeNow()
-                        ]
-                    );
-                } else {
-                    $roomHousewares[] = [
-                        'houseware_id' => $houseware['houseware_id'],
-                        'room_id' => $room->id,
-                        'created_at' => getDateTimeNow(),
-                        'updated_at' => getDateTimeNow()
-                    ];
+                        ];
+                    }
                 }
             }
             if (!empty($roomHousewares)) {
@@ -203,9 +212,11 @@ class RoomController extends Controller
             }
 
             $roomMedias = [];
+            $countRoomMedias = count($room->medias());
             foreach ($request->room_medias as $media) {
                 if (@$media['id'] && @$media['deleted_at']) {
                     Business::getRoomMedia()->delete(['id' => $media['id']]);
+                    $countRoomMedias--;
                 } elseif (@$media['id']) {
                     $urlFile = $media['link'];
                     if (str_contains($media['link'], CommonEnum::FOLDER_TEMP_MEDIA)) {
@@ -229,13 +240,15 @@ class RoomController extends Controller
                         CommonEnum::FOLDER_MEDIA,
                         CommonEnum::FOLDER_TEMP_MEDIA
                     );
-                    $roomMedias[] = [
-                        'room_id' => $room->id,
-                        'link' => $urlFile,
-                        'type' => $media['type'],
-                        'created_at' => getDateTimeNow(),
-                        'updated_at' => getDateTimeNow()
-                    ];
+                    if ($countRoomMedias + count($roomMedias) < RoomEnum::MAX_NUMBER_VIDEO_AND_IMAGE) {
+                        $roomMedias[] = [
+                            'room_id' => $room->id,
+                            'link' => $urlFile,
+                            'type' => $media['type'],
+                            'created_at' => getDateTimeNow(),
+                            'updated_at' => getDateTimeNow()
+                        ];
+                    }
                 }
             }
             if (!empty($roomMedias)) {

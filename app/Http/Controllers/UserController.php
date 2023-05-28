@@ -32,7 +32,12 @@ class UserController extends Controller
             ]);
             $data['password'] = Hash::make($request->password);
 
-            $user = Business::getUser()->create($data);
+            $user = Business::getUser()->getUserByEmail($data['email']);
+            if ($user && $user->status == UserEnum::STATUS_NEW) {
+                $user->update($data);
+            } else {
+                $user = Business::getUser()->create($data);
+            }
             $user->user_role = CommonEnum::USER_ROLE_USER;
 
             $this->sendEmailUserVerifyEmail($user, VerifyEnum::TYPE_REGISTER_SETTING_PWD);

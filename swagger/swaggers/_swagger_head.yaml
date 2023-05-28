@@ -1,0 +1,7 @@
+openapi: 3.0.3
+info:
+  title: ThuePhongTro_TTH API
+  description: ""
+servers:
+  - url: http://localhost:8082
+paths:

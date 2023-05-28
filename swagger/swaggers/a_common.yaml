@@ -1,0 +1,126 @@
+  /api/provinces:
+    get:
+      tags:
+        - Common
+      summary: Get List Province
+      description: Get List Province
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+  /api/districts:
+    get:
+      tags:
+        - Common
+      summary: Get List District
+      description: Get List District
+      parameters:
+        - name: province_id
+          in: path
+          description: 'id of provinces'
+          example: 1
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+  /api/wards:
+    get:
+      tags:
+        - Common
+      summary: Get List Ward
+      description: Get List Ward
+      parameters:
+        - name: district_id
+          in: path
+          description: 'id of districts'
+          example: 1
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+  /api/room-type/list:
+    get:
+      tags:
+        - Common
+      summary: Get List room type
+      description: Get List room type
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string

@@ -1,0 +1,68 @@
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "title"
+        province_id:
+          type: integer
+          example: 1
+        district_id:
+          type: integer
+          example: 1
+        ward_id:
+          type: integer
+          example: 1
+        address_detail:
+          type: string
+          nullable: true
+          description: 'string | null'
+          example: "address_detail"
+        maps_location:
+          type: string
+          nullable: true
+          description: 'string | null'
+          example: "maps_location"
+        is_negotiate:
+          type: integer
+          example: 1
+          description: '1: negotiate cost, 0: has cost'
+        cost:
+          type: float
+          nullable: true
+          example: 10000
+          description: 'if is_negotiate = 0, cost is required. Unit: thousand dong.'
+        acreage:
+          type: float
+          example: 25.5
+          description: 'Unit: m2'
+        max_people_allowed:
+          type: integer
+          nullable: true
+          example: 3
+        room_type_id:
+          type: integer
+          example: 1
+          description: 'id of room_types'
+        more_description:
+          type: string
+          nullable: true
+          description: 'string | null'
+          example: "more_description"
+        status:
+          type: integer
+          example: 1
+          description: '1: show, 0: hidden'
+        admin_id:
+          type: integer
+          example: 1
+          description: 'id of admins'
+        created_at:
+          type: string
+          example: '2023/01/04 14:45'
+        updated_at:
+          type: string
+          example: '2023/01/04 14:45'

@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 interface HousewareServiceInterface
 {
     /**
-     * List all housewares.
+     * List all housewares by admin
      *
      * @param array $condition
      * @return array
      */
-    public function getList(array $condition);
+    public function getListByAdmin(array $condition);
 
     /**
      * Get houseware detail.

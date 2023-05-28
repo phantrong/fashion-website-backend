@@ -22,4 +22,5 @@ php artisan config:cache
 php artisan optimize
 php artisan db:seed
 php artisan vietnamzone:import
+php artisan swagger:write
 ```

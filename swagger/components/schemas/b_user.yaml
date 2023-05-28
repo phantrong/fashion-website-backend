@@ -1,0 +1,24 @@
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        first_name:
+          type: string
+          nullable: true
+          example: "first_name"
+        last_name:
+          type: string
+          example: "last_name"
+        birthday:
+          type: string
+          example: '2001-01-04'
+        notifications_email:
+          type: integer
+          example: 1
+          description: '1: on, 0: off'
+        status:
+          type: integer
+          example: 1
+          description: '1: not verify, 2: active, 3: block'

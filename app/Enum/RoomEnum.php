@@ -22,4 +22,6 @@ class RoomEnum
         'more_description',
         'status',
     ];
+
+    const MAX_NUMBER_VIDEO_AND_IMAGE = 10;
 }

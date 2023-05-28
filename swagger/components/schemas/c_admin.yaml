@@ -1,0 +1,17 @@
+    Admin:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "name"
+        type:
+          type: integer
+          example: 1
+          description: '1: is root, 0: not is root'
+        status:
+          type: integer
+          example: 1
+          description: '1: not verify, 2: active, 3: block'

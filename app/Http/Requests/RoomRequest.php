@@ -15,7 +15,7 @@ class RoomRequest extends BaseFormRequest
     {
         $id = $this->id ?? 'NULL';
 
-        return [
+        $rules = [
             'title' => 'required|max:255',
             'province_id' => 'required|exists:provinces,id',
             'district_id' => 'required|exists:districts,id',
@@ -37,5 +37,11 @@ class RoomRequest extends BaseFormRequest
             'room_medias.*.type' => 'required|in:' . RoomMediaEnum::MEDIA_IMAGE_TYPE . ','
                 . RoomMediaEnum::MEDIA_VIDEO_TYPE,
         ];
+
+        if (!$this->is_negotiate) {
+            $rules['cost'] = 'required|integer|digits_between:0,18';
+        }
+
+        return $rules;
     }
 }

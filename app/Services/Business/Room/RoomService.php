@@ -22,7 +22,10 @@ class RoomService extends BasesBusiness implements RoomServiceInterface
 
     public function getListByAdmin(array $condition = [])
     {
-        return $this->repository->getListByAdmin($condition);
+        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
+        $rooms = $this->repository->getListByAdmin($condition);
+
+        return PaginationHelper::formatPagination($rooms, 'rooms');
     }
 
     public function getDetailByAdmin($id, array $condition = [])

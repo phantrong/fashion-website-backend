@@ -29,11 +29,12 @@ class AuthController extends Controller
             return $this->response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
         }
         if ($user->status == AdminEnum::STATUS_BLOCK) {
-            return $this->response()->error(__('message.error.406'), JsonResponse::HTTP_NOT_ACCEPTABLE);
+            return $this->response()->errorCode(__('message.user.blocked'), JsonResponse::HTTP_NOT_ACCEPTABLE);
         }
         $dataToken = [
             'id' => $user->id,
-            'name' => $user->name,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
             'birthday' => $user->birthday,
             'notifications_email' => $user->notifications_email,
             'status' => $user->status
@@ -43,6 +44,7 @@ class AuthController extends Controller
 
         return $this->response()->success([
             'token' => $accessToken,
+            'user' => $dataToken
         ]);
     }
 
@@ -90,6 +92,7 @@ class AuthController extends Controller
 
         return $this->response()->success([
             'token' => $accessToken,
+            'admin' => $dataToken
         ]);
     }
 

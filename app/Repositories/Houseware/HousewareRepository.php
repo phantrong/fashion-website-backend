@@ -30,4 +30,13 @@ class HousewareRepository extends BaseRepository implements HousewareRepositoryI
     {
         return $this->querySelect($condition, $columns)->first();
     }
+
+    public function getListByAdmin(array $condition, $columns = ['*'])
+    {
+        return $this->model->select($columns)
+            ->when(@$condition['key_word'], function ($query) use ($condition) {
+                $query->where('name', 'like', '%'. $condition['key_word'] . '%');
+            })
+            ->paginate($condition['per_page'], $columns, 'page', $condition['page']);
+    }
 }

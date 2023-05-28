@@ -1,0 +1,172 @@
+  /s2/register:
+    post:
+      tags:
+        - User
+      summary: api register
+      description: User register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                birthday:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirm:
+                  type: string
+              required:
+                - last_name
+                - birthday
+                - email
+                - password
+                - password_confirm
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/User'
+        '422':
+          description: 'Validation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unprocessable'
+  /s2/register/verify-email:
+    post:
+      tags:
+        - User
+      summary: Verify Email Register
+      description: Verify Email Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccess'
+        '406':
+          description: 'Not Acceptable'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: "Not Acceptable"
+                    description: 'Code invalid'
+  /s2/login:
+    post:
+      tags:
+        - User
+      summary: api login
+      description: User login
+      parameters:
+        - name: email
+          in: query
+          description: The email for login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      admin:
+                        $ref: '#/components/schemas/User'
+        '401':
+          description: 'User wrong email or password'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '422':
+          description: 'Validation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unprocessable'
+        '406':
+          description: 'Not Acceptable'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messsage:
+                    type: string
+                    example: "Not Acceptable"
+                    description: 'Account blocked'
+  /s2/logout:
+    post:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: api logout
+      description: admin logout
+      responses:
+        '200':
+          description: successful admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccess'
+        '401':
+          description: 'Token invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
