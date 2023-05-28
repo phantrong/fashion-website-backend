@@ -8,6 +8,8 @@ class HousewareEnum
 
     const COLUMNS_SELECT = [
         'id',
-        'name'
+        'name',
+        'created_at',
+        'updated_at'
     ];
 }
