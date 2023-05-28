@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 interface ProvinceServiceInterface
 {
     /**
-     * List all provinces.
+     * getList
      *
-     * @param array $condition
-     * @return array
+     * @param  mixed $condition
+     * @param  mixed $columns
+     * @return void
      */
-    public function getList(array $condition);
+    public function getList(array $condition = [], $columns = ['*']);
 
     /**
      * Get province detail.

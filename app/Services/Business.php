@@ -22,6 +22,8 @@ use App\Services\Business\RoomMedia\RoomMediaService;
 use App\Services\Business\RoomMedia\RoomMediaServiceInterface;
 use App\Services\Business\Verify\VerifyService;
 use App\Services\Business\Verify\VerifyServiceInterface;
+use App\Services\Business\RoomType\RoomTypeService;
+use App\Services\Business\RoomType\RoomTypeServiceInterface;
 
 class Business
 {
@@ -123,5 +125,15 @@ class Business
     public static function getVerify()
     {
         return app(VerifyServiceInterface::class);
+    }
+
+    /**
+     * Get RoomTypeService.
+     *
+     * @return RoomTypeService
+     */
+    public static function getRoomType()
+    {
+        return app(RoomTypeServiceInterface::class);
     }
 }

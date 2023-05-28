@@ -18,6 +18,8 @@ use App\Repositories\RoomHouseware\RoomHousewareRepository;
 use App\Repositories\RoomHouseware\RoomHousewareRepositoryInterface;
 use App\Repositories\RoomMedia\RoomMediaRepository;
 use App\Repositories\RoomMedia\RoomMediaRepositoryInterface;
+use App\Repositories\RoomType\RoomTypeRepository;
+use App\Repositories\RoomType\RoomTypeRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Verify\VerifyRepository;
@@ -78,6 +80,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             VerifyRepositoryInterface::class,
             VerifyRepository::class
+        );
+        $this->app->singleton(
+            RoomTypeRepositoryInterface::class,
+            RoomTypeRepository::class
         );
     }
 }

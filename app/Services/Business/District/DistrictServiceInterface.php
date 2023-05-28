@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 interface DistrictServiceInterface
 {
     /**
-     * List all districts.
+     * getList
      *
-     * @param array $condition
-     * @return array
+     * @param  mixed $condition
+     * @param  mixed $columns
+     * @return void
      */
-    public function getList(array $condition);
+    public function getList(array $condition = [], $columns = ['*']);
 
     /**
      * Get district detail.

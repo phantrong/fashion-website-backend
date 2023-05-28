@@ -8,16 +8,10 @@ use Illuminate\Support\Facades\Log;
 
 class AddressController extends Controller
 {
-    private $perpage = 20;
-
     public function getListProvince(Request $request)
     {
         try {
-            $conditions = [
-                'per_page' => $request->per_page ?? $this->perpage,
-                'page' => $request->page ?? 1
-            ];
-            $provinces = Business::getProvince()->getList($conditions);
+            $provinces = Business::getProvince()->getList();
             return $this->response()->success($provinces);
         } catch (\Exception $exception) {
             Log::error(['getListProvince']);
@@ -28,10 +22,7 @@ class AddressController extends Controller
     public function getListDistrict(Request $request)
     {
         try {
-            $conditions = [
-                'per_page' => $request->per_page ?? $this->perpage,
-                'page' => $request->page ?? 1
-            ];
+            $conditions = [];
             if ($request->province_id) {
                 $conditions['province_id'] = $request->province_id;
             }
@@ -46,10 +37,7 @@ class AddressController extends Controller
     public function getListWard(Request $request)
     {
         try {
-            $conditions = [
-                'per_page' => $request->per_page ?? $this->perpage,
-                'page' => $request->page ?? 1
-            ];
+            $conditions = [];
             if ($request->district_id) {
                 $conditions['district_id'] = $request->district_id;
             }

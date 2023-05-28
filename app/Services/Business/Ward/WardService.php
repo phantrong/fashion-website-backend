@@ -21,17 +21,14 @@ class WardService extends BasesBusiness implements WardServiceInterface
     }
 
     /**
-     * List all wards.
+     * List all.
      *
      * @param array $condition
      * @return array
      */
-    public function getList(array $condition)
+    public function getList(array $condition = [], $columns = WardEnum::COLUMNS_SELECT)
     {
-        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
-        $wards = Repository::getWard()->getListPagination($condition, WardEnum::COLUMNS_SELECT);
-
-        return PaginationHelper::formatPagination($wards, 'wards');
+        return $this->repository->getList($condition, $columns);
     }
 
     /**

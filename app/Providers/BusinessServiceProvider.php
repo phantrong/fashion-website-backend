@@ -18,6 +18,8 @@ use App\Services\Business\RoomHouseware\RoomHousewareService;
 use App\Services\Business\RoomHouseware\RoomHousewareServiceInterface;
 use App\Services\Business\RoomMedia\RoomMediaService;
 use App\Services\Business\RoomMedia\RoomMediaServiceInterface;
+use App\Services\Business\RoomType\RoomTypeService;
+use App\Services\Business\RoomType\RoomTypeServiceInterface;
 use App\Services\Business\Verify\VerifyService;
 use App\Services\Business\Verify\VerifyServiceInterface;
 use App\Services\Business\Ward\WardService;
@@ -72,6 +74,10 @@ class BusinessServiceProvider extends ServiceProvider
         $this->app->bind(
             VerifyServiceInterface::class,
             VerifyService::class
+        );
+        $this->app->bind(
+            RoomTypeServiceInterface::class,
+            RoomTypeService::class
         );
     }
 }

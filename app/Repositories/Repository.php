@@ -24,6 +24,8 @@ use App\Repositories\RoomMedia\RoomMediaRepository;
 use App\Repositories\RoomMedia\RoomMediaRepositoryInterface;
 use App\Repositories\Verify\VerifyRepository;
 use App\Repositories\Verify\VerifyRepositoryInterface;
+use App\Repositories\RoomType\RoomTypeRepository;
+use App\Repositories\RoomType\RoomTypeRepositoryInterface;
 
 class Repository
 {
@@ -135,5 +137,15 @@ class Repository
     public static function getVerify()
     {
         return app(VerifyRepositoryInterface::class);
+    }
+
+    /**
+     * Get RoomTypeRepository.
+     *
+     * @return RoomTypeRepository
+     */
+    public static function getRoomType()
+    {
+        return app(RoomTypeRepositoryInterface::class);
     }
 }

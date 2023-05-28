@@ -281,4 +281,15 @@ class RoomController extends Controller
             throw $exception;
         }
     }
+
+    public function getListRoomType()
+    {
+        try {
+            $roomTypes = Business::getRoomType()->getList();
+            return $this->response()->success($roomTypes);
+        } catch (\Exception $exception) {
+            Log::error(['getListRoomType']);
+            throw $exception;
+        }
+    }
 }

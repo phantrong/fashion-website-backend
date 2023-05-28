@@ -21,17 +21,14 @@ class DistrictService extends BasesBusiness implements DistrictServiceInterface
     }
 
     /**
-     * List all districts.
+     * List all.
      *
      * @param array $condition
      * @return array
      */
-    public function getList(array $condition)
+    public function getList(array $condition = [], $columns = DistrictEnum::COLUMNS_SELECT)
     {
-        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
-        $districts = Repository::getDistrict()->getListPagination($condition, DistrictEnum::COLUMNS_SELECT);
-
-        return PaginationHelper::formatPagination($districts, 'districts');
+        return $this->repository->getList($condition, $columns);
     }
 
     /**

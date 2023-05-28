@@ -21,17 +21,14 @@ class ProvinceService extends BasesBusiness implements ProvinceServiceInterface
     }
 
     /**
-     * List all provinces.
+     * List all.
      *
      * @param array $condition
      * @return array
      */
-    public function getList(array $condition)
+    public function getList(array $condition = [], $columns = ProvinceEnum::COLUMNS_SELECT)
     {
-        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
-        $provinces = Repository::getProvince()->getListPagination($condition, ProvinceEnum::COLUMNS_SELECT);
-
-        return PaginationHelper::formatPagination($provinces, 'provinces');
+        return $this->repository->getList($condition, $columns);
     }
 
     /**
