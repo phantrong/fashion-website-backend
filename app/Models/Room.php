@@ -69,8 +69,8 @@ class Room extends Model
             Houseware::class,
             'room_housewares',
             'room_id',
-            'houseware_id'
-        )->whereNull('room_housewares.deleted_at');
+            'houseware_id',
+        )->withPivot('id')->whereNull('room_housewares.deleted_at');
     }
 
     public function medias()
