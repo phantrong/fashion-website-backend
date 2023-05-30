@@ -19,8 +19,10 @@ class UserEnum
         'id',
         'first_name',
         'last_name',
+        'avatar',
         'birthday',
         'status',
         'notifications_email',
+        'google_id'
     ];
 }

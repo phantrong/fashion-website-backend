@@ -41,7 +41,8 @@ interface UserServiceInterface
      * getUserByEmail
      *
      * @param  string $email
+     * @param  array $columns
      * @return object
      */
-    public function getUserByEmail($email);
+    public function getUserByEmail($email, $columns);
 }

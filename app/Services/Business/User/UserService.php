@@ -76,11 +76,11 @@ class UserService extends BasesBusiness implements UserServiceInterface
         ]);
     }
 
-    public function getUserByEmail($email)
+    public function getUserByEmail($email, $columns = UserEnum::COLUMNS_SELECT)
     {
         $user = Repository::getUser()->getUserDetail([
             'email' => $email
-        ], UserEnum::COLUMNS_SELECT);
+        ], $columns);
         if (!$user) {
             return null;
         }

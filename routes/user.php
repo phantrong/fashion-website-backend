@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'loginUser'])->name('user.login');
+Route::post('login-google', [AuthController::class, 'loginUserByGoogle'])->name('user.login.google');
 Route::post('verify_email', [UserController::class, 'verifyEmail'])->name('user.verify_email');
 Route::post('register', [UserController::class, 'registerUser'])->name('user.register');
 Route::post('register/verify-email', [UserController::class, 'verifyEmail'])->name('user.verify.email');

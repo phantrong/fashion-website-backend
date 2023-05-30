@@ -19,7 +19,7 @@ class RegisterUserRequest extends BaseFormRequest
         return [
             'first_name' => 'nullable|max:255',
             'last_name' => 'required|max:255',
-            'birthday' => 'required|date_format:Y-m-d|before:' . getNow()->subYears(10)->format('Y-m-d'),
+            'birthday' => 'nullable|date_format:Y-m-d|before:' . getNow()->subYears(10)->format('Y-m-d'),
             'email' => [
                 "required",
                 "email:rfc,filter",

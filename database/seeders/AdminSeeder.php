@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
         Admin::create([
             'name' => 'Root Admin',
             'type' => AdminEnum::TYPE_ROOT_ADMIN,
-            'email' => 'thuephongtro_tth@gmail.com',
+            'email' => 'thuephongtrotth@gmail.com',
             'password' => '$2y$10$ZsFUwQ0gauzt4/iJO7KKLuaVRSnVGknWNsCqRcOznmh7rd0gGlsLq',
             'status' => AdminEnum::STATUS_ACTIVE,
         ]);

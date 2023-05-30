@@ -6,8 +6,6 @@ use App\Enum\CommonEnum;
 use App\Enum\UserEnum;
 use App\Enum\VerifyEnum;
 use App\Http\Requests\RegisterUserRequest;
-use App\Http\Requests\UserListRequest;
-use App\Http\Requests\UserRequest;
 use App\Repositories\Repository;
 use App\Services\Business;
 use Exception;
@@ -93,10 +91,10 @@ class UserController extends Controller
     /**
      * Get the list of users.
      *
-     * @param UserListRequest $request
+     * @param Request $request
      * @return JsonResponse
      */
-    public function list(UserListRequest $request)
+    public function list(Request $request)
     {
         $input = $request->only([
             'per_page',
@@ -127,11 +125,11 @@ class UserController extends Controller
      * Get user detail.
      *
      * @param int $id
-     * @param UserRequest $request
+     * @param Request $request
      * @return JsonResponse
      * @throws Exception
      */
-    public function update($id, UserRequest $request)
+    public function update($id, Request $request)
     {
         DB::beginTransaction();
         try {

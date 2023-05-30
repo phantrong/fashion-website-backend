@@ -17,11 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('first_name')->nullable();
             $table->string('last_name');
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('email');
             $table->string('password');
             $table->tinyInteger('status')->default(1)->comment('1: new, 2: active, 3: block');
             $table->tinyInteger('notifications_email')->default(1)->comment('0: no, 1: yes');
+            $table->string('google_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
