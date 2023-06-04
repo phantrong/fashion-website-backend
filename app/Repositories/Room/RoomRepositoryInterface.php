@@ -32,4 +32,21 @@ interface RoomRepositoryInterface
      * @return Builder|Model
      */
     public function getRoomDetail(array $condition, $columns = ['*']);
+    
+    /**
+     * getListByUser
+     *
+     * @param  array $condition
+     * @return object
+     */
+    public function getListByUser(array $condition);
+    
+    /**
+     * getDetailByUser
+     *
+     * @param  int $id
+     * @param  array $condition
+     * @return object
+     */
+    public function getDetailByUser($id, array $condition);
 }

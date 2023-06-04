@@ -283,6 +283,8 @@
     post:
       tags:
         - User
+      security:
+        - bearerAuth: []
       summary: Update user profile
       description: Update user profile
       parameters:
@@ -343,3 +345,341 @@
                     type: string
                     example: "Not Acceptable"
                     description: 'Account blocked'
+  /s2/room/search:
+    get:
+      tags:
+        - User
+      summary: Search room
+      description: Search room
+      parameters:
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: admin_id
+          description: Search by creater
+          in: query
+          schema:
+            type: string
+        - name: room_type_id
+          description: 'Search by room type: 1: Phong tro, 2: CCMN'
+          in: query
+          schema:
+            type: string
+        - name: province_id
+          in: query
+          schema:
+            type: string
+        - name: district_id
+          in: query
+          schema:
+            type: string
+        - name: ward_id
+          in: query
+          schema:
+            type: string
+        - name: is_negotiate
+          description: 'Search by is_negotiate: 1'
+          in: query
+          schema:
+            type: string
+        - name: start_cost
+          description: 'Search by cost: cost >= start_cost'
+          in: query
+          schema:
+            type: string
+        - name: end_cost
+          description: 'Search by cost: cost <= end_cost'
+          in: query
+          schema:
+            type: string
+        - name: start_acreage
+          description: 'Search by acreage: acreage <= start_acreage'
+          in: query
+          schema:
+            type: string
+        - name: end_acreage
+          description: 'Search by acreage: acreage <= end_acreage'
+          in: query
+          schema:
+            type: string
+        - name: key_word
+          description: 'Search by key_word: address, title, more_description'
+          in: query
+          schema:
+            type: string
+        - name: order_by_created_at
+          description: 'Search by created_at: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+        - name: order_by_cost
+          description: 'Search by cost: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+        - name: order_by_acreage
+          description: 'Search by acreage: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 1
+                      per_page:
+                        type: integer
+                        example: 1
+                      page:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      rooms:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            title:
+                              type: string
+                              example: "title"
+                            province_id:
+                              type: integer
+                              example: 1
+                            province_name:
+                              type: string
+                              example: 'Thành phố Hà Nội'
+                            district_id:
+                              type: integer
+                              example: 1
+                            district_name:
+                              type: string
+                              example: string
+                            ward_id:
+                              type: integer
+                              example: 1
+                            ward_name:
+                              type: string
+                              example: string
+                            address_detail:
+                              type: string
+                              nullable: true
+                              description: 'string | null'
+                              example: "address_detail"
+                            is_negotiate:
+                              type: integer
+                              example: 1
+                              description: '1: negotiate cost, 0: has cost'
+                            cost:
+                              type: float
+                              nullable: true
+                              example: 10000
+                              description: 'if is_negotiate = 0, cost is required. Unit: thousand dong.'
+                            acreage:
+                              type: float
+                              example: 25.5
+                              description: 'Unit: m2'
+                            room_type_id:
+                              type: integer
+                              example: 1
+                              description: 'id of room_types'
+                            status:
+                              type: integer
+                              example: 1
+                              description: '1: show, 0: hidden'
+                            created_at:
+                              type: string
+                              example: '2023/01/04 14:45'
+                            updated_at:
+                              type: string
+                              example: '2023/01/04 14:45'
+                            room_type:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "name"
+                            medias:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 1
+                                  room_id:
+                                    type: integer
+                                    example: 1
+                                  type:
+                                    type: integer
+                                    example: 1
+                                  link:
+                                    type: string
+                                    example: "link"
+  /s2/room/detail/{id}:
+    get:
+      tags:
+        - User
+      summary: Detail room
+      description: Detail room
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      title:
+                        type: string
+                        example: "title"
+                      province_id:
+                        type: integer
+                        example: 1
+                      province_name:
+                        type: string
+                        example: 'Thành phố Hà Nội'
+                      district_id:
+                        type: integer
+                        example: 1
+                      district_name:
+                        type: string
+                        example: string
+                      ward_id:
+                        type: integer
+                        example: 1
+                      ward_name:
+                        type: string
+                        example: string
+                      address_detail:
+                        type: string
+                        nullable: true
+                        description: 'string | null'
+                        example: "address_detail"
+                      is_negotiate:
+                        type: integer
+                        example: 1
+                        description: '1: negotiate cost, 0: has cost'
+                      cost:
+                        type: float
+                        nullable: true
+                        example: 10000
+                        description: 'if is_negotiate = 0, cost is required. Unit: thousand dong.'
+                      acreage:
+                        type: float
+                        example: 25.5
+                        description: 'Unit: m2'
+                      room_type_id:
+                        type: integer
+                        example: 1
+                        description: 'id of room_types'
+                      status:
+                        type: integer
+                        example: 1
+                        description: '1: show, 0: hidden'
+                      maps_location:
+                        type: string
+                        nullable: true
+                        description: 'string | null'
+                        example: "maps_location"
+                      max_people_allowed:
+                        type: integer
+                        nullable: true
+                        example: 3
+                      more_description:
+                        type: string
+                        nullable: true
+                        description: 'string | null'
+                        example: "address_detail"
+                      created_at:
+                        type: string
+                        example: '2023/01/04 14:45'
+                      updated_at:
+                        type: string
+                        example: '2023/01/04 14:45'
+                      room_type:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "name"
+                      medias:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            room_id:
+                              type: integer
+                              example: 1
+                            type:
+                              type: integer
+                              example: 1
+                            link:
+                              type: string
+                              example: "link"
+                      housewares:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "name"
+                            pivot:
+                              type: object
+                              properties:
+                                room_id:
+                                  type: integer
+                                  example: 1
+                                houseware_id:
+                                  type: integer
+                                  example: 1
+                                id:
+                                  type: integer
+                                  example: 1

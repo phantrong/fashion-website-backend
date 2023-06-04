@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,13 @@ Route::post('register', [UserController::class, 'registerUser'])->name('user.reg
 Route::post('register/verify-email', [UserController::class, 'verifyEmail'])->name('user.verify.email');
 
 // anonymous user
-
+Route::controller(RoomController::class)
+    ->prefix('room')
+    ->name('room.')
+    ->group(function () {
+        Route::get('search', 'getListByUser')->name('search');
+        Route::get('detail/{id}', 'getDetailByUser')->name('detail');
+    });
 
 // authen user
 Route::group([

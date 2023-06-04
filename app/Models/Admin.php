@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasFactory, HasApiTokens;
+    use Notifiable, SoftDeletes, HasFactory, HasApiTokens, ModelTrait;
 
     /**
      * @var string
@@ -25,6 +26,7 @@ class Admin extends Authenticatable
     protected $fillable = [
         'name',
         'type',
+        'phone',
         'email',
         'password',
         'create_admin',

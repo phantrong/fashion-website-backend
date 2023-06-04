@@ -305,4 +305,53 @@ class RoomController extends Controller
             throw $exception;
         }
     }
+
+    public function getListByUser(Request $request)
+    {
+        try {
+            $conditions = $request->only([
+                'admin_id',
+                'room_type_id',
+                'province_id',
+                'district_id',
+                'ward_id',
+                'is_negotiate',
+                'start_cost',
+                'end_cost',
+                'start_acreage',
+                'end_acreage',
+                'key_word',
+                'order_by_created_at',
+                'order_by_cost',
+                'order_by_acreage'
+            ]);
+            $conditions['per_page'] = $request->per_page ?? $this->perpage;
+            $conditions['page'] = $request->page ?? 1;
+
+            $rooms = Business::getRoom()->getListByUser($conditions);
+            return $this->response()->success($rooms);
+        } catch (\Exception $exception) {
+            Log::error(['getListByUser Room']);
+            throw $exception;
+        }
+    }
+
+    public function getDetailByUser(Request $request, $id)
+    {
+        try {
+            $room = Business::getRoom()->getDetailByUser($id, []);
+
+            if (!$room) {
+                return $this->response()->errorCode(
+                    __('message.common_error.not_item'),
+                    JsonResponse::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            return $this->response()->success($room);
+        } catch (\Exception $exception) {
+            Log::error(['getDetailByUser Room']);
+            throw $exception;
+        }
+    }
 }

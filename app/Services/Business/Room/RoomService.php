@@ -49,4 +49,17 @@ class RoomService extends BasesBusiness implements RoomServiceInterface
 
         return $room;
     }
+
+    public function getListByUser(array $condition = [])
+    {
+        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
+        $rooms = $this->repository->getListByUser($condition);
+
+        return PaginationHelper::formatPagination($rooms, 'rooms');
+    }
+
+    public function getDetailByUser($id, array $condition = [])
+    {
+        return $this->repository->getDetailByUser($id, $condition);
+    }
 }

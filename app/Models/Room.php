@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Enum\RoomMediaEnum;
+use App\Traits\FullTextSearch;
+use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Room extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, ModelTrait, FullTextSearch;
 
     /**
      * @var string
@@ -36,6 +38,21 @@ class Room extends Model
         'more_description',
         'status',
         'admin_id'
+    ];
+
+    /**
+     * The columns of the full text index
+     */
+    protected $searchable = [
+        'title',
+        'address_detail',
+        'more_description'
+        // 'rooms.title',
+        // 'rooms.address_detail',
+        // 'rooms.more_description',
+        // 'provinces.name',
+        // 'districts.name',
+        // 'wards.name',
     ];
 
     public function admin()

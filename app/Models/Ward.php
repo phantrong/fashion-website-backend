@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\FullTextSearch;
+use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ward extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelTrait, FullTextSearch;
 
     /**
      * @var string
@@ -23,6 +25,13 @@ class Ward extends Model
         'name',
         'district_id',
         'gso_id',
+    ];
+
+    /**
+     * The columns of the full text index
+     */
+    protected $searchable = [
+        'name'
     ];
 
     public function rooms()

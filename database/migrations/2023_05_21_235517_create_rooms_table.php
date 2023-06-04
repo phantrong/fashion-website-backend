@@ -26,7 +26,7 @@ return new class extends Migration
             $table->float('acreage', 21, 3)->comment('unit: m2');
             $table->integer('max_people_allowed')->nullable();
             $table->bigInteger('room_type_id')->unsigned();
-            $table->mediumText('more_description')->nullable();
+            $table->text('more_description')->nullable();
             $table->tinyInteger('status')->default(0)->comment('1: show, 0: hidden');
             $table->bigInteger('admin_id')->unsigned();
             $table->timestamps();
