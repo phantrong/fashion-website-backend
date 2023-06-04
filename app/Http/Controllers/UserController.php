@@ -88,67 +88,35 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Get the list of users.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function list(Request $request)
+    public function getUserProfile(Request $request)
     {
-        $input = $request->only([
-            'per_page',
-            'page',
-        ]);
-        $users = Business::getUser()->getList($input);
-
-        return $this->response()->success($users);
-    }
-
-    /**
-     * Get user detail.
-     *
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function getDetail($id)
-    {
-        $user = Business::getUser()->getDetail($id);
-        if (!$user) {
-            return $this->response()->error(__('message.error.406'), JsonResponse::HTTP_NOT_ACCEPTABLE);
-        }
-
-        return $this->response()->success($user);
-    }
-
-    /**
-     * Get user detail.
-     *
-     * @param int $id
-     * @param Request $request
-     * @return JsonResponse
-     * @throws Exception
-     */
-    public function update($id, Request $request)
-    {
-        DB::beginTransaction();
         try {
+            $user = $this->getAuth($request);
+
+            return $this->response()->success($user);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            Log::error('[getUserProfile]');
+            throw $exception;
+        }
+    }
+
+    public function updateUserProfile(Request $request)
+    {
+        try {
+            $user = $this->getAuth($request);
+
             $input = $request->only([
                 'avatar',
-                'name',
-                'gender',
+                'first_name',
+                'last_name',
                 'birthday',
-                'email',
+                'notifications_email',
             ]);
-            $data = Business::getUser()->update($id, $input);
-            if (isset($data['message']) && isset($data['status'])) {
-                DB::rollBack();
 
-                return $this->response()->error($data['message'], $data['status']);
-            }
-            DB::commit();
+            $user->update($input);
 
-            return $this->response()->success();
+            return $this->response()->success($user);
         } catch (Exception $exception) {
             DB::rollBack();
             Log::error('[Update user]');

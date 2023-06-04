@@ -21,4 +21,12 @@ Route::group([
     'as' => 'user.',
 ], function () {
     Route::post('logout', [AuthController::class, 'logoutUser'])->name('logout');
+
+    Route::controller(UserController::class)
+        ->prefix('profile')
+        ->name('profile.')
+        ->group(function () {
+            Route::get('/', 'getUserProfile')->name('get');
+            Route::post('update', 'updateUserProfile')->name('update');
+        });
 });

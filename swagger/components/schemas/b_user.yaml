@@ -4,6 +4,10 @@
         id:
           type: integer
           example: 1
+        avatar:
+          type: string
+          nullable: true
+          example: "http://localhost"
         first_name:
           type: string
           nullable: true

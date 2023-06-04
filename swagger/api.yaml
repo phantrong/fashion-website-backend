@@ -1250,6 +1250,80 @@ paths:
                     type: string
                     example: "Not Acceptable"
                     description: 'Account blocked'
+  /s2/login-google:
+    post:
+      tags:
+        - User
+      summary: api login by google gmail
+      description: User login by google gmail
+      parameters:
+        - name: email
+          in: query
+          description: The email for login
+          required: true
+          schema:
+            type: string
+        - name: sub
+          in: query
+          description: key of google
+          required: true
+          schema:
+            type: string
+        - name: given_name
+          in: query
+          schema:
+            type: string
+        - name: family_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: picture
+          in: query
+          description: Avatar
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      admin:
+                        $ref: '#/components/schemas/User'
+        '422':
+          description: 'Validation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unprocessable'
+        '406':
+          description: 'Not Acceptable'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messsage:
+                    type: string
+                    example: "Not Acceptable"
+                    description: 'Account blocked'
   /s2/logout:
     post:
       tags:
@@ -1271,6 +1345,105 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Unauthorized'
+  /s2/profile:
+    get:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Get User Profile
+      description: Get User Profile
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: 'Token invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: 'Token invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+  /s2/profile/update:
+    post:
+      tags:
+        - User
+      summary: Update user profile
+      description: Update user profile
+      parameters:
+        - name: avatar
+          in: query
+          schema:
+            type: string
+        - name: first_name
+          in: query
+          schema:
+            type: string
+        - name: last_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: birthday
+          in: query
+          schema:
+            type: string
+        - name: notifications_email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/User'
+        '422':
+          description: 'Validation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unprocessable'
+        '406':
+          description: 'Not Acceptable'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messsage:
+                    type: string
+                    example: "Not Acceptable"
+                    description: 'Account blocked'
 components:
   schemas:
     AuthAdmin:
@@ -1307,6 +1480,10 @@ components:
         id:
           type: integer
           example: 1
+        avatar:
+          type: string
+          nullable: true
+          example: "http://localhost"
         first_name:
           type: string
           nullable: true
