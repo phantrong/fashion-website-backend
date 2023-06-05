@@ -26,6 +26,10 @@ use App\Repositories\Verify\VerifyRepository;
 use App\Repositories\Verify\VerifyRepositoryInterface;
 use App\Repositories\RoomType\RoomTypeRepository;
 use App\Repositories\RoomType\RoomTypeRepositoryInterface;
+use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepository;
+use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepositoryInterface;
+use App\Repositories\RoomViewTime\RoomViewTimeRepository;
+use App\Repositories\RoomViewTime\RoomViewTimeRepositoryInterface;
 
 class Repository
 {
@@ -147,5 +151,25 @@ class Repository
     public static function getRoomType()
     {
         return app(RoomTypeRepositoryInterface::class);
+    }
+
+    /**
+     * Get HomepageAccessTimeRepository.
+     *
+     * @return HomepageAccessTimeRepository
+     */
+    public static function getHomepageAccessTime()
+    {
+        return app(HomepageAccessTimeRepositoryInterface::class);
+    }
+
+    /**
+     * Get RoomViewTimeRepository.
+     *
+     * @return RoomViewTimeRepository
+     */
+    public static function getRoomViewTime()
+    {
+        return app(RoomViewTimeRepositoryInterface::class);
     }
 }

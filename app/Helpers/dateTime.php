@@ -19,3 +19,12 @@ function getDateTimeNow()
 {
     return Carbon::now()->setTimezone(config('app.timezone'))->format('Y-m-d H:i:s');
 }
+
+/**
+ *
+ * @return Carbon
+ */
+function getTimeParse(string $date)
+{
+    return Carbon::parse($date)->setTimezone(config('app.timezone'));
+}

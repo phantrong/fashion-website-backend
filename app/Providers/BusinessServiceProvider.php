@@ -6,6 +6,8 @@ use App\Services\Business\Admin\AdminService;
 use App\Services\Business\Admin\AdminServiceInterface;
 use App\Services\Business\District\DistrictService;
 use App\Services\Business\District\DistrictServiceInterface;
+use App\Services\Business\HomepageAccessTime\HomepageAccessTimeService;
+use App\Services\Business\HomepageAccessTime\HomepageAccessTimeServiceInterface;
 use App\Services\Business\Houseware\HousewareService;
 use App\Services\Business\Houseware\HousewareServiceInterface;
 use App\Services\Business\Province\ProvinceService;
@@ -20,6 +22,8 @@ use App\Services\Business\RoomMedia\RoomMediaService;
 use App\Services\Business\RoomMedia\RoomMediaServiceInterface;
 use App\Services\Business\RoomType\RoomTypeService;
 use App\Services\Business\RoomType\RoomTypeServiceInterface;
+use App\Services\Business\RoomViewTime\RoomViewTimeService;
+use App\Services\Business\RoomViewTime\RoomViewTimeServiceInterface;
 use App\Services\Business\Verify\VerifyService;
 use App\Services\Business\Verify\VerifyServiceInterface;
 use App\Services\Business\Ward\WardService;
@@ -78,6 +82,14 @@ class BusinessServiceProvider extends ServiceProvider
         $this->app->bind(
             RoomTypeServiceInterface::class,
             RoomTypeService::class
+        );
+        $this->app->bind(
+            HomepageAccessTimeServiceInterface::class,
+            HomepageAccessTimeService::class
+        );
+        $this->app->bind(
+            RoomViewTimeServiceInterface::class,
+            RoomViewTimeService::class
         );
     }
 }

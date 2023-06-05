@@ -6,6 +6,8 @@ use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\District\DistrictRepository;
 use App\Repositories\District\DistrictRepositoryInterface;
+use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepository;
+use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepositoryInterface;
 use App\Repositories\Houseware\HousewareRepository;
 use App\Repositories\Houseware\HousewareRepositoryInterface;
 use App\Repositories\InvalidToken\InvalidTokenRepository;
@@ -20,6 +22,8 @@ use App\Repositories\RoomMedia\RoomMediaRepository;
 use App\Repositories\RoomMedia\RoomMediaRepositoryInterface;
 use App\Repositories\RoomType\RoomTypeRepository;
 use App\Repositories\RoomType\RoomTypeRepositoryInterface;
+use App\Repositories\RoomViewTime\RoomViewTimeRepository;
+use App\Repositories\RoomViewTime\RoomViewTimeRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Verify\VerifyRepository;
@@ -84,6 +88,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             RoomTypeRepositoryInterface::class,
             RoomTypeRepository::class
+        );
+        $this->app->singleton(
+            HomepageAccessTimeRepositoryInterface::class,
+            HomepageAccessTimeRepository::class
+        );
+        $this->app->singleton(
+            RoomViewTimeRepositoryInterface::class,
+            RoomViewTimeRepository::class
         );
     }
 }

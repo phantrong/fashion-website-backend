@@ -24,6 +24,10 @@ use App\Services\Business\Verify\VerifyService;
 use App\Services\Business\Verify\VerifyServiceInterface;
 use App\Services\Business\RoomType\RoomTypeService;
 use App\Services\Business\RoomType\RoomTypeServiceInterface;
+use App\Services\Business\HomepageAccessTime\HomepageAccessTimeService;
+use App\Services\Business\HomepageAccessTime\HomepageAccessTimeServiceInterface;
+use App\Services\Business\RoomViewTime\RoomViewTimeService;
+use App\Services\Business\RoomViewTime\RoomViewTimeServiceInterface;
 
 class Business
 {
@@ -135,5 +139,25 @@ class Business
     public static function getRoomType()
     {
         return app(RoomTypeServiceInterface::class);
+    }
+
+    /**
+     * Get HomepageAccessTimeService.
+     *
+     * @return HomepageAccessTimeService
+     */
+    public static function getHomepageAccessTime()
+    {
+        return app(HomepageAccessTimeServiceInterface::class);
+    }
+
+    /**
+     * Get RoomViewTimeService.
+     *
+     * @return RoomViewTimeService
+     */
+    public static function getRoomViewTime()
+    {
+        return app(RoomViewTimeServiceInterface::class);
     }
 }

@@ -634,6 +634,15 @@
                       updated_at:
                         type: string
                         example: '2023/01/04 14:45'
+                      admin_id:
+                        type: integer
+                        example: 1
+                      admin_name:
+                        type: string
+                        example: 'admin_name'
+                      total_view_times:
+                        type: integer
+                        example: 1
                       room_type:
                         type: object
                         properties:
@@ -683,3 +692,39 @@
                                 id:
                                   type: integer
                                   example: 1
+  /s2/homepage/access-times/total:
+    get:
+      tags:
+        - User
+      summary: Get Total Access Times Homepage
+      description: Get Total Access Times Homepage
+      parameters:
+        - name: start_date
+          in: query
+          description: 'Search by start_date: Y-m-d'
+          schema:
+            type: string
+        - name: end_date
+          description: 'Search by end_date: Y-m-d'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 1

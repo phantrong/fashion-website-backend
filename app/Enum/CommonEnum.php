@@ -25,4 +25,6 @@ class CommonEnum
 
     const USER_ROLE_ADMIN = 1;
     const USER_ROLE_USER = 2;
+
+    const ACCESS_VIEW_DISTANCE_TIME_MINUTE = 15;
 }

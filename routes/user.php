@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomepageAccessTimeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,11 @@ Route::post('register', [UserController::class, 'registerUser'])->name('user.reg
 Route::post('register/verify-email', [UserController::class, 'verifyEmail'])->name('user.verify.email');
 
 // anonymous user
+Route::get(
+    'homepage/access-times/total',
+    [HomepageAccessTimeController::class, 'getTotalAccessTimes']
+)->name('homepage.access_times.total');
+
 Route::controller(RoomController::class)
     ->prefix('room')
     ->name('room.')

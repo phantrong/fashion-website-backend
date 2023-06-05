@@ -348,6 +348,16 @@ class RoomController extends Controller
                 );
             }
 
+            // view time
+            $dataView = [
+                'address_ip' => $request->ip(),
+                'user_agent' => $request->header('User-Agent'),
+                'room_id' => $room->id
+            ];
+            Business::getRoomViewTime()->addViewTime($dataView);
+
+            $room->total_view_times = Business::getRoomViewTime()->getTotalViewTimesByRoomId($room->id);
+
             return $this->response()->success($room);
         } catch (\Exception $exception) {
             Log::error(['getDetailByUser Room']);
