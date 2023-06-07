@@ -10,6 +10,10 @@ use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepository;
 use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepositoryInterface;
 use App\Repositories\Houseware\HousewareRepository;
 use App\Repositories\Houseware\HousewareRepositoryInterface;
+use App\Repositories\InterestedRoom\InterestedRoomRepository;
+use App\Repositories\InterestedRoom\InterestedRoomRepositoryInterface;
+use App\Repositories\InterestedRoomItem\InterestedRoomItemRepository;
+use App\Repositories\InterestedRoomItem\InterestedRoomItemRepositoryInterface;
 use App\Repositories\InvalidToken\InvalidTokenRepository;
 use App\Repositories\InvalidToken\InvalidTokenRepositoryInterface;
 use App\Repositories\Province\ProvinceRepository;
@@ -96,6 +100,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             RoomViewTimeRepositoryInterface::class,
             RoomViewTimeRepository::class
+        );
+        $this->app->singleton(
+            InterestedRoomRepositoryInterface::class,
+            InterestedRoomRepository::class
+        );
+        $this->app->singleton(
+            InterestedRoomItemRepositoryInterface::class,
+            InterestedRoomItemRepository::class
         );
     }
 }

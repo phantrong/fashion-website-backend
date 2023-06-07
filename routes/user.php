@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomepageAccessTimeController;
+use App\Http\Controllers\InterestedRoomController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,15 @@ Route::controller(RoomController::class)
     ->group(function () {
         Route::get('search', 'getListByUser')->name('search');
         Route::get('detail/{id}', 'getDetailByUser')->name('detail');
+    });
+
+Route::controller(InterestedRoomController::class)
+    ->prefix('interested-room')
+    ->name('interested.room.')
+    ->group(function () {
+        Route::post('add', 'addItem')->name('add.item');
+        Route::get('list', 'getListByUser')->name('list');
+        Route::get('list-detail', 'getListDetailByUser')->name('list.detail');
     });
 
 // authen user

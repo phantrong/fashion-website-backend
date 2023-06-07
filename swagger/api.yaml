@@ -1388,29 +1388,25 @@ paths:
         - bearerAuth: []
       summary: Update user profile
       description: Update user profile
-      parameters:
-        - name: avatar
-          in: query
-          schema:
-            type: string
-        - name: first_name
-          in: query
-          schema:
-            type: string
-        - name: last_name
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: birthday
-          in: query
-          schema:
-            type: string
-        - name: notifications_email
-          in: query
-          required: true
-          schema:
-            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                birthday:
+                  type: string
+                notifications_email:
+                  type: number
+              required:
+                - last_name
+                - notifications_email
       responses:
         '200':
           description: successful User
@@ -1829,6 +1825,281 @@ paths:
                       total:
                         type: integer
                         example: 1
+  /s2/interested-room/add:
+    post:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: add item interested room
+      description: add item interested room
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_id:
+                  type: number
+                  description: room_id exists and status = 1 (show) and not deleted_at
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+        '422':
+          description: 'Validation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unprocessable'
+        '401':
+          description: "Token invalid Or don't have Customer-Id"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /s2/interested-room/list:
+    get:
+      tags:
+        - User
+      summary: interested room list in header
+      description: interested room list in header (limit 5 items)
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        item_id:
+                          type: integer
+                          example: 1
+                        room_id:
+                          type: integer
+                          example: 1
+                        room_title:
+                          type: string
+                          example: 'room_title'
+                        created_at:
+                          type: string
+                          example: "2023-06-07T17:07:43.000000Z"
+        '401':
+          description: "Token invalid Or don't have Customer-Id"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /s2/interested-room/list-detail:
+    get:
+      tags:
+        - User
+      summary: interested room list detail
+      description: interested room list detail
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: order_by_created_at
+          description: 'Search by created_at of item: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+        - name: order_by_room_created_at
+          description: 'Search by created_at of room: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+        - name: order_by_cost
+          description: 'Search by cost: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+        - name: order_by_acreage
+          description: 'Search by acreage: Example: asc or desc'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 1
+                      per_page:
+                        type: integer
+                        example: 1
+                      page:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      rooms:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            item_id:
+                              type: integer
+                              example: 1
+                            room_id:
+                              type: integer
+                              example: 1
+                            title:
+                              type: string
+                              example: "title"
+                            province_id:
+                              type: integer
+                              example: 1
+                            province_name:
+                              type: string
+                              example: 'Thành phố Hà Nội'
+                            district_id:
+                              type: integer
+                              example: 1
+                            district_name:
+                              type: string
+                              example: string
+                            ward_id:
+                              type: integer
+                              example: 1
+                            ward_name:
+                              type: string
+                              example: string
+                            address_detail:
+                              type: string
+                              nullable: true
+                              description: 'string | null'
+                              example: "address_detail"
+                            is_negotiate:
+                              type: integer
+                              example: 1
+                              description: '1: negotiate cost, 0: has cost'
+                            cost:
+                              type: float
+                              nullable: true
+                              example: 10000
+                              description: 'if is_negotiate = 0, cost is required. Unit: thousand dong.'
+                            acreage:
+                              type: float
+                              example: 25.5
+                              description: 'Unit: m2'
+                            room_type_id:
+                              type: integer
+                              example: 1
+                              description: 'id of room_types'
+                            status:
+                              type: integer
+                              example: 1
+                              description: '1: show, 0: hidden'
+                            created_at:
+                              type: string
+                              example: '2023-06-04T17:12:45.000000Z'
+                            updated_at:
+                              type: string
+                              example: '2023-06-04T17:12:45.000000Z'
+                            admin_id:
+                              type: number
+                              example: 1
+                            admin_name:
+                              type: string
+                              example: 'admin_name'
+                            room:
+                              type: object
+                              properties:
+                                id:
+                                  type: number
+                                  example: 1
+                                room_type_id:
+                                  type: number
+                                  example: 1
+                                room_type:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 1
+                                    name:
+                                      type: string
+                                      example: "name"
+                                medias:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                        example: 1
+                                      room_id:
+                                        type: integer
+                                        example: 1
+                                      type:
+                                        type: integer
+                                        example: 1
+                                      link:
+                                        type: string
+                                        example: "link"
+        '401':
+          description: "Token invalid Or don't have Customer-Id"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
 components:
   schemas:
     AuthAdmin:

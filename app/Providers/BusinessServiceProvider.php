@@ -10,6 +10,10 @@ use App\Services\Business\HomepageAccessTime\HomepageAccessTimeService;
 use App\Services\Business\HomepageAccessTime\HomepageAccessTimeServiceInterface;
 use App\Services\Business\Houseware\HousewareService;
 use App\Services\Business\Houseware\HousewareServiceInterface;
+use App\Services\Business\InterestedRoom\InterestedRoomService;
+use App\Services\Business\InterestedRoom\InterestedRoomServiceInterface;
+use App\Services\Business\InterestedRoomItem\InterestedRoomItemService;
+use App\Services\Business\InterestedRoomItem\InterestedRoomItemServiceInterface;
 use App\Services\Business\Province\ProvinceService;
 use App\Services\Business\Province\ProvinceServiceInterface;
 use App\Services\Business\User\UserService;
@@ -90,6 +94,14 @@ class BusinessServiceProvider extends ServiceProvider
         $this->app->bind(
             RoomViewTimeServiceInterface::class,
             RoomViewTimeService::class
+        );
+        $this->app->bind(
+            InterestedRoomServiceInterface::class,
+            InterestedRoomService::class
+        );
+        $this->app->bind(
+            InterestedRoomItemServiceInterface::class,
+            InterestedRoomItemService::class
         );
     }
 }

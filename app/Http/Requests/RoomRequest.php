@@ -29,11 +29,11 @@ class RoomRequest extends BaseFormRequest
             'room_type_id' => 'required|exists:room_types,id,deleted_at,NULL',
             'more_description' => 'nullable|max:10000',
             'status' => 'nullable|in:0,1',
-            'room_housewares.*.houseware_id' => 'required|exists:housewares,id,deleted_at,NULL',
-            'room_housewares.*.id' => "nullable|exists:room_housewares,id,room_id,$id",
+            'room_housewares.*.houseware_id' => 'required|distinct|exists:housewares,id,deleted_at,NULL',
+            'room_housewares.*.id' => "nullable|distinct|exists:room_housewares,id,room_id,$id",
             'room_medias' => 'required',
-            'room_medias.*.id' => "nullable|exists:room_medias,id,room_id,$id",
-            'room_medias.*.link' => 'required|max:255',
+            'room_medias.*.id' => "nullable|distinct|exists:room_medias,id,room_id,$id",
+            'room_medias.*.link' => 'required|distinct|max:255',
             'room_medias.*.type' => 'required|in:' . RoomMediaEnum::MEDIA_IMAGE_TYPE . ','
                 . RoomMediaEnum::MEDIA_VIDEO_TYPE,
         ];

@@ -61,6 +61,10 @@ class AuthController extends Controller
                 if ($user->status == AdminEnum::STATUS_BLOCK) {
                     return $this->response()->errorCode(__('message.user.blocked'), JsonResponse::HTTP_NOT_ACCEPTABLE);
                 }
+                if (!$user->google_id) {
+                    $user->google_id = Hash::make($dataRequest['sub']);
+                    $user->save();
+                }
             } else {
                 $newUser = [
                     'first_name' => $dataRequest['given_name'],

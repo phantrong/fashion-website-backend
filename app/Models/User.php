@@ -43,4 +43,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function interestedRoom()
+    {
+        return $this->hasOne(InterestedRoom::class);
+    }
 }

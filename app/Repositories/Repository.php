@@ -30,6 +30,10 @@ use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepository;
 use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepositoryInterface;
 use App\Repositories\RoomViewTime\RoomViewTimeRepository;
 use App\Repositories\RoomViewTime\RoomViewTimeRepositoryInterface;
+use App\Repositories\InterestedRoom\InterestedRoomRepository;
+use App\Repositories\InterestedRoom\InterestedRoomRepositoryInterface;
+use App\Repositories\InterestedRoomItem\InterestedRoomItemRepository;
+use App\Repositories\InterestedRoomItem\InterestedRoomItemRepositoryInterface;
 
 class Repository
 {
@@ -171,5 +175,25 @@ class Repository
     public static function getRoomViewTime()
     {
         return app(RoomViewTimeRepositoryInterface::class);
+    }
+
+    /**
+     * Get InterestedRoomRepository.
+     *
+     * @return InterestedRoomRepository
+     */
+    public static function getInterestedRoom()
+    {
+        return app(InterestedRoomRepositoryInterface::class);
+    }
+
+    /**
+     * Get InterestedRoomItemRepository.
+     *
+     * @return InterestedRoomItemRepository
+     */
+    public static function getInterestedRoomItem()
+    {
+        return app(InterestedRoomItemRepositoryInterface::class);
     }
 }

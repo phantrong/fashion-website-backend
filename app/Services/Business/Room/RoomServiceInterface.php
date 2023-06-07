@@ -31,4 +31,21 @@ interface RoomServiceInterface
      * @return Model
      */
     public function getDetail($condition, $id);
+
+    /**
+     * getListByUser
+     *
+     * @param  array $condition
+     * @return object
+     */
+    public function getListByUser(array $condition = []);
+
+    /**
+     * getDetailByUser
+     *
+     * @param  int $id
+     * @param  array $condition
+     * @return object
+     */
+    public function getDetailByUser($id, array $condition = []);
 }

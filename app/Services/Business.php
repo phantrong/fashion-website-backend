@@ -28,6 +28,10 @@ use App\Services\Business\HomepageAccessTime\HomepageAccessTimeService;
 use App\Services\Business\HomepageAccessTime\HomepageAccessTimeServiceInterface;
 use App\Services\Business\RoomViewTime\RoomViewTimeService;
 use App\Services\Business\RoomViewTime\RoomViewTimeServiceInterface;
+use App\Services\Business\InterestedRoom\InterestedRoomService;
+use App\Services\Business\InterestedRoom\InterestedRoomServiceInterface;
+use App\Services\Business\InterestedRoomItem\InterestedRoomItemService;
+use App\Services\Business\InterestedRoomItem\InterestedRoomItemServiceInterface;
 
 class Business
 {
@@ -159,5 +163,25 @@ class Business
     public static function getRoomViewTime()
     {
         return app(RoomViewTimeServiceInterface::class);
+    }
+
+    /**
+     * Get InterestedRoomService.
+     *
+     * @return InterestedRoomService
+     */
+    public static function getInterestedRoom()
+    {
+        return app(InterestedRoomServiceInterface::class);
+    }
+
+    /**
+     * Get InterestedRoomItemService.
+     *
+     * @return InterestedRoomItemService
+     */
+    public static function getInterestedRoomItem()
+    {
+        return app(InterestedRoomItemServiceInterface::class);
     }
 }

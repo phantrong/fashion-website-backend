@@ -40,6 +40,7 @@ class Controller extends BaseController
     public function getAuth($request)
     {
         $token = $request->bearerToken();
+        if (!$token) return null;
         return Service::getJWT()->getUserInfo($token, $this->getUserRole($request));
     }
 
