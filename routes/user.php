@@ -23,8 +23,9 @@ Route::controller(RoomController::class)
     ->prefix('room')
     ->name('room.')
     ->group(function () {
-        Route::get('search', 'getListByUser')->name('search');
+        Route::get('search', 'getListSearchByUser')->name('search');
         Route::get('detail/{id}', 'getDetailByUser')->name('detail');
+        Route::get('count/by-address', 'getCountRoomByAddressHomepage')->name('count.by_address');
     });
 
 Route::controller(InterestedRoomController::class)

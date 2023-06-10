@@ -27,4 +27,7 @@ class RoomEnum
 
     const STATUS_HIDDEN = 0;
     const STATUS_SHOW = 1;
+
+    const GSO_ID_HA_NOI = 1;
+    const HA_NOI_CITY = 'Thành phố Hà Nội';
 }

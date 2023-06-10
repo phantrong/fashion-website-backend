@@ -33,12 +33,12 @@ interface RoomServiceInterface
     public function getDetail($condition, $id);
 
     /**
-     * getListByUser
+     * getListSearchByUser
      *
      * @param  array $condition
      * @return object
      */
-    public function getListByUser(array $condition = []);
+    public function getListSearchByUser(array $condition = []);
 
     /**
      * getDetailByUser
@@ -48,4 +48,12 @@ interface RoomServiceInterface
      * @return object
      */
     public function getDetailByUser($id, array $condition = []);
+
+    /**
+     * getCountRoomInHanoi
+     *
+     * @param  array $condition
+     * @return object
+     */
+    public function getCountRoomInHanoi($condition = []);
 }

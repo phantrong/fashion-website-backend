@@ -12,6 +12,7 @@ use App\Models\Ward;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RoomRepository extends BaseRepository implements RoomRepositoryInterface
 {
@@ -107,7 +108,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         return $this->querySelect($condition, $columns)->first();
     }
 
-    public function getListByUser(array $condition)
+    public function getListSearchByUser(array $condition)
     {
         $roomTable = $this->model->getTable();
         $provinceTable = Province::getTableName();
@@ -271,5 +272,32 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
                 'housewares:id,name',
             ])
             ->first();
+    }
+
+    public function getCountRoomInHanoi($condition = [])
+    {
+        $roomTable = $this->model->getTable();
+        $provinceTable = Province::getTableName();
+        $districtTable = District::getTableName();
+        $wardTable = Ward::getTableName();
+        $adminTable = Admin::getTableName();
+
+        return $this->model->select(
+            "$districtTable.name as district_name",
+            DB::raw("count($roomTable.id) as count_room"),
+        )
+            ->join($provinceTable, "$provinceTable.id", '=', "$roomTable.province_id")
+            ->join($districtTable, "$districtTable.id", '=', "$roomTable.district_id")
+            ->join($wardTable, "$wardTable.id", '=', "$roomTable.ward_id")
+            ->join($adminTable, "$adminTable.id", '=', "$roomTable.admin_id")
+            ->where("$roomTable.status", RoomEnum::STATUS_SHOW)
+            ->where("$adminTable.status", AdminEnum::STATUS_ACTIVE)
+            ->where(function ($query) use ($provinceTable) {
+                $query->where("$provinceTable.gso_id", RoomEnum::GSO_ID_HA_NOI)
+                    ->orWhere("$provinceTable.name", RoomEnum::HA_NOI_CITY);
+            })
+            ->groupBy("$roomTable.district_id")
+            ->orderByDesc('count_room')
+            ->paginate(@$condition['per_page'] ?? $this->per_page);
     }
 }

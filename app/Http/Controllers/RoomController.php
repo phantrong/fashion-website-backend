@@ -306,7 +306,7 @@ class RoomController extends Controller
         }
     }
 
-    public function getListByUser(Request $request)
+    public function getListSearchByUser(Request $request)
     {
         try {
             $conditions = $request->only([
@@ -328,10 +328,10 @@ class RoomController extends Controller
             $conditions['per_page'] = $request->per_page ?? $this->perpage;
             $conditions['page'] = $request->page ?? 1;
 
-            $rooms = Business::getRoom()->getListByUser($conditions);
+            $rooms = Business::getRoom()->getListSearchByUser($conditions);
             return $this->response()->success($rooms);
         } catch (\Exception $exception) {
-            Log::error(['getListByUser Room']);
+            Log::error(['getListSearchByUser Room']);
             throw $exception;
         }
     }
@@ -361,6 +361,20 @@ class RoomController extends Controller
             return $this->response()->success($room);
         } catch (\Exception $exception) {
             Log::error(['getDetailByUser Room']);
+            throw $exception;
+        }
+    }
+
+    public function getCountRoomByAddressHomepage(Request $request)
+    {
+        try {
+            $conditions['per_page'] = $request->per_page ?? $this->perpage;
+            $conditions['page'] = $request->page ?? 1;
+
+            $rooms = Business::getRoom()->getCountRoomInHanoi($conditions);
+            return $this->response()->success($rooms);
+        } catch (\Exception $exception) {
+            Log::error(['getCountRoomByAddressHomepage Room']);
             throw $exception;
         }
     }
