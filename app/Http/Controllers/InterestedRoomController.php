@@ -16,29 +16,15 @@ class InterestedRoomController extends Controller
     public function addItem(AddInterestedRoomItemRequest $request)
     {
         try {
-            $user = $this->getAuth($request);
-            if (!$user) {
-                $customerId = $request->header('customer_id');
-                if (!$customerId) {
-                    return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
-                }
-                $interestedRooms = Business::getInterestedRoom()->getInterestedRoomsByUserId(null, $customerId);
-                if (!$interestedRooms) {
-                    $interestedRooms = Business::getInterestedRoom()->create([
-                        'customer_id' => $customerId,
-                    ]);
-                }
-                Business::getInterestedRoomItem()->addItem([
-                    'interested_room_id' => $interestedRooms->id,
-                    'room_id' => $request->room_id,
-                ]);
-
-                return $this->response()->success();
-            }
-            $interestedRooms = Business::getInterestedRoom()->getInterestedRoomsByUserId($user->id);
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            $interestedRooms = Business::getInterestedRoom()->getInterestedRoomsByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id']
+            );
             if (!$interestedRooms) {
                 $interestedRooms = Business::getInterestedRoom()->create([
-                    'user_id' => $user->id,
+                    'user_id' => $dataUser['user_id'],
+                    'customer_id' => $dataUser['customer_id'],
                 ]);
             }
             Business::getInterestedRoomItem()->addItem([
@@ -56,17 +42,11 @@ class InterestedRoomController extends Controller
     public function getListByUser(Request $request)
     {
         try {
-            $user = $this->getAuth($request);
-            if (!$user) {
-                $customerId = $request->header('customer_id');
-                if (!$customerId) {
-                    return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
-                }
-                $items = Business::getInterestedRoomItem()->getListItemByUserId(null, $customerId);
-
-                return $this->response()->success($items);
-            }
-            $items = Business::getInterestedRoomItem()->getListItemByUserId($user->id);
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            $items = Business::getInterestedRoomItem()->getListItemByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id']
+            );
 
             return $this->response()->success($items);
         } catch (\Exception $exception) {
@@ -87,17 +67,12 @@ class InterestedRoomController extends Controller
             $conditions['per_page'] = $request->per_page ?? $this->perpage;
             $conditions['page'] = $request->page ?? 1;
 
-            $user = $this->getAuth($request);
-            if (!$user) {
-                $customerId = $request->header('customer_id');
-                if (!$customerId) {
-                    return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
-                }
-                $items = Business::getInterestedRoomItem()->getListDetailItemByUserId(null, $customerId, $conditions);
-
-                return $this->response()->success($items);
-            }
-            $items = Business::getInterestedRoomItem()->getListDetailItemByUserId($user->id, null, $conditions);
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            $items = Business::getInterestedRoomItem()->getListDetailItemByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id'],
+                $conditions
+            );
 
             return $this->response()->success($items);
         } catch (\Exception $exception) {

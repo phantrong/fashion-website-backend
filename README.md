@@ -17,6 +17,7 @@ docker-compose exec php bash
 composer install --ignore-platform-reqs
 composer update
 php artisan key:generate
+php artisan storage:link
 php artisan config:clear
 php artisan config:cache
 php artisan optimize

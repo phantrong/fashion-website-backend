@@ -11,6 +11,8 @@ use App\Services\Business;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -90,5 +92,24 @@ class Controller extends BaseController
 
         SendMailVerifyEmail::dispatch($dataVerify['email_phone'], $dataEmail)->onQueue(LogEnum::QUEUE_EMAIL);
         return $verify;
+    }
+
+    public function getCustomerIdOrUserId(Request $request)
+    {
+        $data = [
+            'customer_id' => null,
+            'user_id' => null,
+        ];
+        $user = $this->getAuth($request);
+        if (!$user) {
+            $customerId = $request->header('customer_id');
+            if (!$customerId) {
+                return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+            }
+            $data['customer_id'] = $customerId;
+        } else {
+            $data['user_id'] = $user->id;
+        }
+        return $data;
     }
 }

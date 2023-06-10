@@ -5,6 +5,7 @@ namespace App\Repositories\RoomViewTime;
 use App\Enum\CommonEnum;
 use App\Models\RoomViewTime;
 use App\Repositories\Base\BaseRepository;
+use Illuminate\Support\Facades\DB;
 
 class RoomViewTimeRepository extends BaseRepository implements RoomViewTimeRepositoryInterface
 {
@@ -53,5 +54,23 @@ class RoomViewTimeRepository extends BaseRepository implements RoomViewTimeRepos
                 $query->whereDate('created_at', '>=', $startTime);
             })
             ->count();
+    }
+
+    public function getHistoryArrayRoomIdsByUserId($userId, $customerId = null)
+    {
+        $result = $this->model->select(
+                'room_id',
+                'created_at'
+            )
+            ->when($userId, function ($query) use ($userId) {
+                $query->where("user_id", $userId);
+            })
+            ->when($customerId, function ($query) use ($customerId) {
+                $query->where("customer_id", $customerId);
+            })
+            ->orderByDesc('created_at')
+            ->get();
+        if ($result) return $result->pluck('room_id')->toArray();
+        return [];
     }
 }

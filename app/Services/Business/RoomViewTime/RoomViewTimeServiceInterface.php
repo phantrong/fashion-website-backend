@@ -21,4 +21,13 @@ interface RoomViewTimeServiceInterface
      * @return int
      */
     public function getTotalViewTimesByRoomId(int $roomId, string $startTime = null, string $endTime = null);
+
+    /**
+     * getHistoryArrayRoomIdsByUserId
+     *
+     * @param  int $userId
+     * @param  string $customerId
+     * @return array
+     */
+    public function getHistoryArrayRoomIdsByUserId($userId, $customerId = null);
 }

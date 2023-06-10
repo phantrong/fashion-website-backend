@@ -437,113 +437,19 @@
                     type: string
                     example: "Success"
                   data:
-                    type: object
-                    properties:
-                      total:
-                        type: integer
-                        example: 1
-                      per_page:
-                        type: integer
-                        example: 1
-                      page:
-                        type: integer
-                        example: 1
-                      last_page:
-                        type: integer
-                        example: 1
-                      rooms:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            title:
-                              type: string
-                              example: "title"
-                            province_id:
-                              type: integer
-                              example: 1
-                            province_name:
-                              type: string
-                              example: 'Thành phố Hà Nội'
-                            district_id:
-                              type: integer
-                              example: 1
-                            district_name:
-                              type: string
-                              example: string
-                            ward_id:
-                              type: integer
-                              example: 1
-                            ward_name:
-                              type: string
-                              example: string
-                            address_detail:
-                              type: string
-                              nullable: true
-                              description: 'string | null'
-                              example: "address_detail"
-                            is_negotiate:
-                              type: integer
-                              example: 1
-                              description: '1: negotiate cost, 0: has cost'
-                            cost:
-                              type: float
-                              nullable: true
-                              example: 10000
-                              description: 'if is_negotiate = 0, cost is required. Unit: thousand dong.'
-                            acreage:
-                              type: float
-                              example: 25.5
-                              description: 'Unit: m2'
-                            room_type_id:
-                              type: integer
-                              example: 1
-                              description: 'id of room_types'
-                            status:
-                              type: integer
-                              example: 1
-                              description: '1: show, 0: hidden'
-                            created_at:
-                              type: string
-                              example: '2023/01/04 14:45'
-                            updated_at:
-                              type: string
-                              example: '2023/01/04 14:45'
-                            room_type:
-                              type: object
-                              properties:
-                                id:
-                                  type: integer
-                                  example: 1
-                                name:
-                                  type: string
-                                  example: "name"
-                            medias:
-                              type: array
-                              items:
-                                type: object
-                                properties:
-                                  id:
-                                    type: integer
-                                    example: 1
-                                  room_id:
-                                    type: integer
-                                    example: 1
-                                  type:
-                                    type: integer
-                                    example: 1
-                                  link:
-                                    type: string
-                                    example: "link"
+                    $ref: '#/components/schemas/RoomDataList'
   /s2/room/detail/{id}:
     get:
       tags:
         - User
       summary: Detail room
       description: Detail room
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: successful
@@ -688,6 +594,36 @@
                                 id:
                                   type: integer
                                   example: 1
+  /s2/room/list-related/{id}:
+    get:
+      tags:
+        - User
+      summary: Get list related room by room id
+      description: Get list related room by room id
+      parameters:
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/RoomDataList'
   /s2/homepage/access-times/total:
     get:
       tags:
@@ -1005,6 +941,15 @@
         - User
       summary: Get count room by district in ha noi city
       description: Get count room by district in ha noi city
+      parameters:
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
       responses:
         '200':
           description: successful
@@ -1044,3 +989,38 @@
                             count_room:
                               type: integer
                               example: 1
+  /s2/room/list-history-view:
+    get:
+      tags:
+        - User
+      summary: Get list histoy view room
+      description: Get list histoy view room
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/RoomDataList'

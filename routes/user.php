@@ -25,6 +25,8 @@ Route::controller(RoomController::class)
     ->group(function () {
         Route::get('search', 'getListSearchByUser')->name('search');
         Route::get('detail/{id}', 'getDetailByUser')->name('detail');
+        Route::get('list-related/{id}', 'getListRelatedByDetail')->name('list.related');
+        Route::get('list-history-view', 'getListRoomHistoryViewByUser')->name('list.history.view');
         Route::get('count/by-address', 'getCountRoomByAddressHomepage')->name('count.by_address');
     });
 

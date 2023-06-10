@@ -26,4 +26,9 @@ class RoomViewTimeService extends BasesBusiness implements RoomViewTimeServiceIn
     {
         return $this->repository->getTotalViewTimesByRoomId($roomId, $startTime, $endTime);
     }
+
+    public function getHistoryArrayRoomIdsByUserId($userId, $customerId = null)
+    {
+        return $this->repository->getHistoryArrayRoomIdsByUserId($userId, $customerId);
+    }
 }

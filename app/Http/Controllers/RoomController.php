@@ -349,10 +349,13 @@ class RoomController extends Controller
             }
 
             // view time
+            $dataUser = $this->getCustomerIdOrUserId($request);
             $dataView = [
                 'address_ip' => $request->ip(),
                 'user_agent' => $request->header('User-Agent'),
-                'room_id' => $room->id
+                'room_id' => $room->id,
+                'user_id' => $dataUser['user_id'],
+                'customer_id' => $dataUser['customer_id'],
             ];
             Business::getRoomViewTime()->addViewTime($dataView);
 
@@ -375,6 +378,60 @@ class RoomController extends Controller
             return $this->response()->success($rooms);
         } catch (\Exception $exception) {
             Log::error(['getCountRoomByAddressHomepage Room']);
+            throw $exception;
+        }
+    }
+
+    public function getListRelatedByDetail(Request $request, $id)
+    {
+        try {
+            $room = Business::getRoom()->getDetailByUser($id, []);
+
+            if (!$room) {
+                return $this->response()->errorCode(
+                    __('message.common_error.not_item'),
+                    JsonResponse::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $conditions = [
+                'per_page' => $request->per_page ?? $this->perpage,
+                'page' => $request->page ?? 1,
+                'room_type_id' => $room->room_type_id,
+                'province_id' => $room->province_id,
+                'district_id' => $room->district_id,
+                'ward_id' => $room->ward_id,
+                'not_in_ids' => [$room->id]
+            ];
+
+            $rooms = Business::getRoom()->getListSearchByUser($conditions);
+
+            return $this->response()->success($rooms);
+        } catch (\Exception $exception) {
+            Log::error(['getListRelatedByDetail Room']);
+            throw $exception;
+        }
+    }
+
+    public function getListRoomHistoryViewByUser(Request $request)
+    {
+        try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            $roomIds = Business::getRoomViewTime()->getHistoryArrayRoomIdsByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id'],
+            );
+            $conditions = [
+                'per_page' => $request->per_page ?? $this->perpage,
+                'page' => $request->page ?? 1,
+                'in_ids' => $roomIds
+            ];
+
+            $rooms = Business::getRoom()->getListSearchByUser($conditions);
+
+            return $this->response()->success($rooms);
+        } catch (\Exception $exception) {
+            Log::error(['getListRoomHistoryViewByUser Room']);
             throw $exception;
         }
     }

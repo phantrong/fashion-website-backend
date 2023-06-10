@@ -142,6 +142,18 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             ->join($adminTable, "$adminTable.id", '=', "$roomTable.admin_id")
             ->where("$roomTable.status", RoomEnum::STATUS_SHOW)
             ->where("$adminTable.status", AdminEnum::STATUS_ACTIVE)
+            ->when(
+                @$condition['not_in_ids'] && is_array($condition['not_in_ids']),
+                function ($query) use ($condition, $roomTable) {
+                    $query->whereNotIn("$roomTable.id", $condition['not_in_ids']);
+                }
+            )
+            ->when(
+                @$condition['in_ids'] && is_array($condition['in_ids']),
+                function ($query) use ($condition, $roomTable) {
+                    $query->whereIn("$roomTable.id", $condition['in_ids']);
+                }
+            )
             ->when(@$condition['admin_id'], function ($query) use ($condition, $roomTable) {
                 $query->where("$roomTable.admin_id", $condition['admin_id']);
             })

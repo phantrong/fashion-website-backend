@@ -22,6 +22,8 @@ class RoomViewTime extends Model
      */
     protected $fillable = [
         'room_id',
+        'customer_id',
+        'user_id',
         'address_ip',
         'user_agent',
     ];
