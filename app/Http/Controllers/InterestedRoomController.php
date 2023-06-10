@@ -17,6 +17,7 @@ class InterestedRoomController extends Controller
     {
         try {
             $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $interestedRooms = Business::getInterestedRoom()->getInterestedRoomsByUserId(
                 $dataUser['user_id'],
                 $dataUser['customer_id']
@@ -39,10 +40,37 @@ class InterestedRoomController extends Controller
         }
     }
 
+    public function removeItem(Request $request)
+    {
+        try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+
+            $interestedRooms = Business::getInterestedRoom()->getInterestedRoomsByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id']
+            );
+            if (!$interestedRooms) {
+                return $this->response()->success();
+            }
+            
+            Business::getInterestedRoomItem()->removeItem([
+                'interested_room_id' => $interestedRooms->id,
+                'item_id' => $request->item_id,
+            ]);
+
+            return $this->response()->success();
+        } catch (\Exception $exception) {
+            Log::error(['removeItem InterestedRoom']);
+            throw $exception;
+        }
+    }
+
     public function getListByUser(Request $request)
     {
         try {
             $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $items = Business::getInterestedRoomItem()->getListItemByUserId(
                 $dataUser['user_id'],
                 $dataUser['customer_id']
@@ -68,6 +96,7 @@ class InterestedRoomController extends Controller
             $conditions['page'] = $request->page ?? 1;
 
             $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $items = Business::getInterestedRoomItem()->getListDetailItemByUserId(
                 $dataUser['user_id'],
                 $dataUser['customer_id'],

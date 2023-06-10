@@ -37,6 +37,14 @@ class InterestedRoomItemRepository extends BaseRepository implements InterestedR
         $this->model->create($data);
     }
 
+    public function removeItem($data)
+    {
+        if (!@$data['interested_room_id'] || !@$data['item_id']) return;
+        
+        return $this->model->where('interested_room_id', $data['interested_room_id'])
+            ->where('id', $data['item_id'])->delete();
+    }
+
     public function getListItemByUserId($userId, $customerId = null)
     {
         $interestedRoomItemTable = $this->model->getTable();

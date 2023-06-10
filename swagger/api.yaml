@@ -1809,6 +1809,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Unauthorized'
+  /s2/interested-room/remove:
+    post:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: remove item interested room
+      description: remove item interested room
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: number
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+        '401':
+          description: "Token invalid Or don't have Customer-Id"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
   /s2/interested-room/list:
     get:
       tags:

@@ -35,6 +35,7 @@ Route::controller(InterestedRoomController::class)
     ->name('interested.room.')
     ->group(function () {
         Route::post('add', 'addItem')->name('add.item');
+        Route::post('remove', 'removeItem')->name('remove.item');
         Route::get('list', 'getListByUser')->name('list');
         Route::get('list-detail', 'getListDetailByUser')->name('list.detail');
     });

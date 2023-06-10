@@ -104,7 +104,7 @@ class Controller extends BaseController
         if (!$user) {
             $customerId = $request->header('customer_id');
             if (!$customerId) {
-                return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+                return false;
             }
             $data['customer_id'] = $customerId;
         } else {

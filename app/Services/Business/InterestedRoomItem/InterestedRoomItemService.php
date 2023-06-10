@@ -23,6 +23,11 @@ class InterestedRoomItemService extends BasesBusiness implements InterestedRoomI
         return $this->repository->addItem($data);
     }
 
+    public function removeItem($data)
+    {
+        return $this->repository->removeItem($data);
+    }
+
     public function getListItemByUserId($userId, $customerId = null)
     {
         return $this->repository->getListItemByUserId($userId, $customerId);

@@ -11,6 +11,14 @@ interface InterestedRoomItemRepositoryInterface
      * @return void
      */
     public function addItem($data);
+    
+    /**
+     * removeItem
+     *
+     * @param  int $data
+     * @return void
+     */
+    public function removeItem($data);
 
     /**
      * getListItemByUserId

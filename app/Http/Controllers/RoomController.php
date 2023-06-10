@@ -350,6 +350,7 @@ class RoomController extends Controller
 
             // view time
             $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $dataView = [
                 'address_ip' => $request->ip(),
                 'user_agent' => $request->header('User-Agent'),
@@ -417,6 +418,7 @@ class RoomController extends Controller
     {
         try {
             $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $roomIds = Business::getRoomViewTime()->getHistoryArrayRoomIdsByUserId(
                 $dataUser['user_id'],
                 $dataUser['customer_id'],
