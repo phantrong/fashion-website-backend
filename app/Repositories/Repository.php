@@ -34,6 +34,10 @@ use App\Repositories\InterestedRoom\InterestedRoomRepository;
 use App\Repositories\InterestedRoom\InterestedRoomRepositoryInterface;
 use App\Repositories\InterestedRoomItem\InterestedRoomItemRepository;
 use App\Repositories\InterestedRoomItem\InterestedRoomItemRepositoryInterface;
+use App\Repositories\InterestedRoomInfomation\InterestedRoomInfomationRepository;
+use App\Repositories\InterestedRoomInfomation\InterestedRoomInfomationRepositoryInterface;
+use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepository;
+use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepositoryInterface;
 
 class Repository
 {
@@ -195,5 +199,25 @@ class Repository
     public static function getInterestedRoomItem()
     {
         return app(InterestedRoomItemRepositoryInterface::class);
+    }
+
+    /**
+     * Get HistorySearchKeyWordRepository.
+     *
+     * @return HistorySearchKeyWordRepository
+     */
+    public static function getHistorySearchKeyWord()
+    {
+        return app(HistorySearchKeyWordRepositoryInterface::class);
+    }
+
+    /**
+     * Get InterestedRoomInfomationRepository.
+     *
+     * @return InterestedRoomInfomationRepository
+     */
+    public static function getInterestedRoomInfomation()
+    {
+        return app(InterestedRoomInfomationRepositoryInterface::class);
     }
 }

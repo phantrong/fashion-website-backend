@@ -24,6 +24,7 @@ Route::controller(RoomController::class)
     ->name('room.')
     ->group(function () {
         Route::get('search', 'getListSearchByUser')->name('search');
+        Route::get('list-search-key-word', 'getListHistorySearchKeyWord')->name('list.search.key_word');
         Route::get('detail/{id}', 'getDetailByUser')->name('detail');
         Route::get('list-related/{id}', 'getListRelatedByDetail')->name('list.related');
         Route::get('list-history-view', 'getListRoomHistoryViewByUser')->name('list.history.view');

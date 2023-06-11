@@ -32,6 +32,10 @@ use App\Services\Business\InterestedRoom\InterestedRoomService;
 use App\Services\Business\InterestedRoom\InterestedRoomServiceInterface;
 use App\Services\Business\InterestedRoomItem\InterestedRoomItemService;
 use App\Services\Business\InterestedRoomItem\InterestedRoomItemServiceInterface;
+use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordService;
+use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordServiceInterface;
+use App\Services\Business\InterestedRoomInfomation\InterestedRoomInfomationService;
+use App\Services\Business\InterestedRoomInfomation\InterestedRoomInfomationServiceInterface;
 
 class Business
 {
@@ -183,5 +187,25 @@ class Business
     public static function getInterestedRoomItem()
     {
         return app(InterestedRoomItemServiceInterface::class);
+    }
+
+    /**
+     * Get HistorySearchKeyWordService.
+     *
+     * @return HistorySearchKeyWordService
+     */
+    public static function getHistorySearchKeyWord()
+    {
+        return app(HistorySearchKeyWordServiceInterface::class);
+    }
+
+    /**
+     * Get InterestedRoomInfomationService.
+     *
+     * @return InterestedRoomInfomationService
+     */
+    public static function getInterestedRoomInfomation()
+    {
+        return app(InterestedRoomInfomationServiceInterface::class);
     }
 }

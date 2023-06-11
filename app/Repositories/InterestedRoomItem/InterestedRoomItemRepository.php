@@ -40,7 +40,7 @@ class InterestedRoomItemRepository extends BaseRepository implements InterestedR
     public function removeItem($data)
     {
         if (!@$data['interested_room_id'] || !@$data['item_id']) return;
-        
+
         return $this->model->where('interested_room_id', $data['interested_room_id'])
             ->where('id', $data['item_id'])->delete();
     }
@@ -69,8 +69,11 @@ class InterestedRoomItemRepository extends BaseRepository implements InterestedR
             ->where("$roomTable.status", RoomEnum::STATUS_SHOW)
             ->whereNull("$roomTable.deleted_at")
             ->orderByDesc("$interestedRoomItemTable.created_at")
-            ->limit(5)
-            ->get();
+            ->with([
+                'room:id',
+                'room.firstImage:id,room_id,type,link'
+            ])
+            ->paginate(5);
     }
 
     public function getListDetailItemByUserId($userId, $customerId = null, $condition = [])

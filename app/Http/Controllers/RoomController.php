@@ -328,6 +328,17 @@ class RoomController extends Controller
             $conditions['per_page'] = $request->per_page ?? $this->perpage;
             $conditions['page'] = $request->page ?? 1;
 
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+
+            if ($conditions['key_word']) {
+                Business::getHistorySearchKeyWord()->create([
+                    'user_id' => $dataUser['user_id'],
+                    'customer_id' => $dataUser['customer_id'],
+                    'key_word' => $conditions['key_word'],
+                ]);
+            }
+
             $rooms = Business::getRoom()->getListSearchByUser($conditions);
             return $this->response()->success($rooms);
         } catch (\Exception $exception) {
@@ -434,6 +445,23 @@ class RoomController extends Controller
             return $this->response()->success($rooms);
         } catch (\Exception $exception) {
             Log::error(['getListRoomHistoryViewByUser Room']);
+            throw $exception;
+        }
+    }
+
+    public function getListHistorySearchKeyWord(Request $request)
+    {
+        try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+            $keyWords = Business::getHistorySearchKeyWord()->getListByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id'],
+            );
+
+            return $this->response()->success($keyWords);
+        } catch (\Exception $exception) {
+            Log::error(['getListHistorySearchKeyWord Room']);
             throw $exception;
         }
     }

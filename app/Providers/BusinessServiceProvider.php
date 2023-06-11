@@ -6,12 +6,16 @@ use App\Services\Business\Admin\AdminService;
 use App\Services\Business\Admin\AdminServiceInterface;
 use App\Services\Business\District\DistrictService;
 use App\Services\Business\District\DistrictServiceInterface;
+use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordService;
+use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordServiceInterface;
 use App\Services\Business\HomepageAccessTime\HomepageAccessTimeService;
 use App\Services\Business\HomepageAccessTime\HomepageAccessTimeServiceInterface;
 use App\Services\Business\Houseware\HousewareService;
 use App\Services\Business\Houseware\HousewareServiceInterface;
 use App\Services\Business\InterestedRoom\InterestedRoomService;
 use App\Services\Business\InterestedRoom\InterestedRoomServiceInterface;
+use App\Services\Business\InterestedRoomInfomation\InterestedRoomInfomationService;
+use App\Services\Business\InterestedRoomInfomation\InterestedRoomInfomationServiceInterface;
 use App\Services\Business\InterestedRoomItem\InterestedRoomItemService;
 use App\Services\Business\InterestedRoomItem\InterestedRoomItemServiceInterface;
 use App\Services\Business\Province\ProvinceService;
@@ -102,6 +106,14 @@ class BusinessServiceProvider extends ServiceProvider
         $this->app->bind(
             InterestedRoomItemServiceInterface::class,
             InterestedRoomItemService::class
+        );
+        $this->app->bind(
+            HistorySearchKeyWordServiceInterface::class,
+            HistorySearchKeyWordService::class
+        );
+        $this->app->bind(
+            InterestedRoomInfomationServiceInterface::class,
+            InterestedRoomInfomationService::class
         );
     }
 }

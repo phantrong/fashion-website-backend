@@ -30,7 +30,14 @@ class InterestedRoomItemService extends BasesBusiness implements InterestedRoomI
 
     public function getListItemByUserId($userId, $customerId = null)
     {
-        return $this->repository->getListItemByUserId($userId, $customerId);
+        $condition = [
+            'per_page' => 5,
+            'page' => 1,
+        ];
+        [$condition['per_page'], $condition['page']] = PaginationHelper::getPaginationInput($condition);
+        $items = $this->repository->getListItemByUserId($userId, $customerId);
+
+        return PaginationHelper::formatPagination($items, 'items');
     }
 
     public function getListDetailItemByUserId($userId, $customerId = null, $condition = [])

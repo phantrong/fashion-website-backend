@@ -6,12 +6,16 @@ use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\District\DistrictRepository;
 use App\Repositories\District\DistrictRepositoryInterface;
+use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepository;
+use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepositoryInterface;
 use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepository;
 use App\Repositories\HomepageAccessTime\HomepageAccessTimeRepositoryInterface;
 use App\Repositories\Houseware\HousewareRepository;
 use App\Repositories\Houseware\HousewareRepositoryInterface;
 use App\Repositories\InterestedRoom\InterestedRoomRepository;
 use App\Repositories\InterestedRoom\InterestedRoomRepositoryInterface;
+use App\Repositories\InterestedRoomInfomation\InterestedRoomInfomationRepository;
+use App\Repositories\InterestedRoomInfomation\InterestedRoomInfomationRepositoryInterface;
 use App\Repositories\InterestedRoomItem\InterestedRoomItemRepository;
 use App\Repositories\InterestedRoomItem\InterestedRoomItemRepositoryInterface;
 use App\Repositories\InvalidToken\InvalidTokenRepository;
@@ -108,6 +112,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             InterestedRoomItemRepositoryInterface::class,
             InterestedRoomItemRepository::class
+        );
+        $this->app->singleton(
+            HistorySearchKeyWordRepositoryInterface::class,
+            HistorySearchKeyWordRepository::class
+        );
+        $this->app->singleton(
+            InterestedRoomInfomationRepositoryInterface::class,
+            InterestedRoomInfomationRepository::class
         );
     }
 }
