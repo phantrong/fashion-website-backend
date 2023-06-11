@@ -351,7 +351,6 @@ class RoomController extends Controller
     public function getDetailByUser(Request $request, $id)
     {
         try {
-            // view time
             $dataUser = $this->getCustomerIdOrUserId($request);
             if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $conditions['user_id'] = $dataUser['user_id'];
@@ -364,6 +363,7 @@ class RoomController extends Controller
                     JsonResponse::HTTP_NOT_ACCEPTABLE
                 );
             }
+            // view time
             $dataView = [
                 'address_ip' => $request->ip(),
                 'user_agent' => $request->header('User-Agent'),
@@ -372,6 +372,15 @@ class RoomController extends Controller
                 'customer_id' => $dataUser['customer_id'],
             ];
             Business::getRoomViewTime()->addViewTime($dataView);
+
+            // for suggestion
+            Business::getInterestedRoomInfomation()->createOrUpdate([
+                'user_id' => $dataUser['user_id'],
+                'customer_id' => $dataUser['customer_id'],
+                'district_id' => $room->district_id,
+                'ward_id' => $room->ward_id,
+                'room_type_id' => $room->room_type_id
+            ]);
 
             $room->total_view_times = Business::getRoomViewTime()->getTotalViewTimesByRoomId($room->id);
 
@@ -506,34 +515,27 @@ class RoomController extends Controller
         try {
             $dataUser = $this->getCustomerIdOrUserId($request);
             if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
-            $conditions = $request->only([
-                'admin_id',
-                'room_type_id',
-                'province_id',
-                'district_id',
-                'ward_id',
-                'is_negotiate',
-                'start_cost',
-                'end_cost',
-                'start_acreage',
-                'end_acreage',
-                'key_word',
-                'order_by_created_at',
-                'order_by_cost',
-                'order_by_acreage'
-            ]);
-            $conditions['per_page'] = $request->per_page ?? $this->perpage;
-            $conditions['page'] = $request->page ?? 1;
+
             $conditions['user_id'] = $dataUser['user_id'];
             $conditions['customer_id'] = $dataUser['customer_id'];
+            $keyWords = Business::getHistorySearchKeyWord()->getListByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id'],
+            );
+            $infoSuggestion = Business::getInterestedRoomInfomation()->getListByUserId(
+                $dataUser['user_id'],
+                $dataUser['customer_id'],
+            );
 
-            if (@$conditions['key_word']) {
-                Business::getHistorySearchKeyWord()->createOrUpdate(
-                    $conditions['key_word'],
-                    $dataUser['user_id'],
-                    $dataUser['customer_id'],
-                );
-            }
+            $arrayIds = Business::getRoom()->getSuggestionRoomArrayIds($keyWords, $infoSuggestion, $conditions);
+
+            $conditions = [
+                'per_page' => $request->per_page ?? $this->perpage,
+                'page' => $request->page ?? 1,
+                'suggestion_ids' => $arrayIds
+            ];
+            $conditions['user_id'] = $dataUser['user_id'];
+            $conditions['customer_id'] = $dataUser['customer_id'];
 
             $rooms = Business::getRoom()->getListSearchByUser($conditions);
             return $this->response()->success($rooms);

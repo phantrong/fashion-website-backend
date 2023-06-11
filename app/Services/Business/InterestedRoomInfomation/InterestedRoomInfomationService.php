@@ -16,4 +16,14 @@ class InterestedRoomInfomationService extends BasesBusiness implements Intereste
         $this->model = $interestedRoomInfomation;
         $this->repository = Repository::getInterestedRoomInfomation();
     }
+
+    public function createOrUpdate($data)
+    {
+        return $this->repository->createOrUpdate($data);
+    }
+
+    public function getListByUserId($userId, $customerId = null)
+    {
+        return $this->repository->getListByUserId($userId, $customerId);
+    }
 }

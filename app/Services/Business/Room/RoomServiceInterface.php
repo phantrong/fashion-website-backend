@@ -56,4 +56,14 @@ interface RoomServiceInterface
      * @return object
      */
     public function getCountRoomInHanoi($condition = []);
+
+    /**
+     * getSuggestionRoomArrayIds
+     *
+     * @param  object $keyWords
+     * @param  object $infoSuggestion
+     * @param  array $condition
+     * @return array
+     */
+    public function getSuggestionRoomArrayIds($keyWords, $infoSuggestion, array $condition);
 }

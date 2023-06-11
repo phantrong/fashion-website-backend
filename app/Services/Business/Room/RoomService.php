@@ -70,4 +70,9 @@ class RoomService extends BasesBusiness implements RoomServiceInterface
 
         return PaginationHelper::formatPagination($rooms, 'rooms');
     }
+
+    public function getSuggestionRoomArrayIds($keyWords, $infoSuggestion, array $condition)
+    {
+        return $this->repository->getSuggestionRoomArrayIds($keyWords, $infoSuggestion, $condition);
+    }
 }

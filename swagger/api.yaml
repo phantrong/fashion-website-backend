@@ -2291,6 +2291,41 @@ paths:
                     type: string
                     example: "Not Acceptable"
                     description: 'Item not exist'             
+  /s2/room/list-suggestion:
+    get:
+      tags:
+        - User
+      summary: Get list suggestionw room
+      description: Get list suggestion room
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/RoomDataList'
 components:
   schemas:
     AuthAdmin:
