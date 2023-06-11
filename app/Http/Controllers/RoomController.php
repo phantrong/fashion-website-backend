@@ -332,11 +332,11 @@ class RoomController extends Controller
             if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
 
             if ($conditions['key_word']) {
-                Business::getHistorySearchKeyWord()->create([
-                    'user_id' => $dataUser['user_id'],
-                    'customer_id' => $dataUser['customer_id'],
-                    'key_word' => $conditions['key_word'],
-                ]);
+                Business::getHistorySearchKeyWord()->createOrUpdate(
+                    $conditions['key_word'],
+                    $dataUser['user_id'],
+                    $dataUser['customer_id'],
+                );
             }
 
             $rooms = Business::getRoom()->getListSearchByUser($conditions);
@@ -462,6 +462,33 @@ class RoomController extends Controller
             return $this->response()->success($keyWords);
         } catch (\Exception $exception) {
             Log::error(['getListHistorySearchKeyWord Room']);
+            throw $exception;
+        }
+    }
+
+    public function deleteHistorySearchKeyWord(Request $request, $id)
+    {
+        try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+
+            $keyWord = Business::getHistorySearchKeyWord()->find($id);
+
+            if (
+                !$keyWord || ($dataUser['user_id'] != $keyWord->user_id &&
+                    $dataUser['customer_id'] != $keyWord->customer_id)
+            ) {
+                return $this->response()->errorCode(
+                    __('message.common_error.not_item'),
+                    JsonResponse::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $keyWord->delete();
+
+            return $this->response()->success();
+        } catch (\Exception $exception) {
+            Log::error(['deleteHistorySearchKeyWord Room']);
             throw $exception;
         }
     }

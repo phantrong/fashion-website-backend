@@ -17,6 +17,11 @@ class HistorySearchKeyWordService extends BasesBusiness implements HistorySearch
         $this->repository = Repository::getHistorySearchKeyWord();
     }
 
+    public function createOrUpdate($keyWord, $userId, $customerId = null)
+    {
+        return $this->repository->createOrUpdate($keyWord, $userId, $customerId);
+    }
+
     public function getListByUserId($userId, $customerId = null)
     {
         return $this->repository->getListByUserId($userId, $customerId);

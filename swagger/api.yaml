@@ -1449,6 +1449,11 @@ paths:
       summary: Search room
       description: Search room
       parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
         - name: per_page
           in: query
           schema:
@@ -1876,22 +1881,58 @@ paths:
                     type: string
                     example: "Success"
                   data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        item_id:
-                          type: integer
-                          example: 1
-                        room_id:
-                          type: integer
-                          example: 1
-                        room_title:
-                          type: string
-                          example: 'room_title'
-                        created_at:
-                          type: string
-                          example: "2023-06-07T17:07:43.000000Z"
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 1
+                      per_page:
+                        type: integer
+                        example: 1
+                      page:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      items:
+                        type: object
+                        properties:
+                          item_id:
+                            type: integer
+                            example: 1
+                          room_id:
+                            type: integer
+                            example: 1
+                          room_title:
+                            type: string
+                            example: 'room_title'
+                          created_at:
+                            type: string
+                            example: "2023-06-07T17:07:43.000000Z"
+                          room:
+                            type: object
+                            properties:
+                              id:
+                                type: number
+                                example: 1
+                              first_image:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 1
+                                    room_id:
+                                      type: integer
+                                      example: 1
+                                    type:
+                                      type: integer
+                                      example: 1
+                                    link:
+                                      type: string
+                                      example: "link"
         '401':
           description: "Token invalid Or don't have Customer-Id"
           content:
@@ -2166,6 +2207,81 @@ paths:
                     example: "Success"
                   data:
                     $ref: '#/components/schemas/RoomDataList'
+  /s2/room/list-search-key-word:
+    get:
+      tags:
+        - User
+      summary: Get list histoy search key word
+      description: Get list histoy search key word
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        key_word:
+                          type: string
+                          example: "key_word"
+  /s2/room/delete-search-key-word/{id}:
+    delete:
+      tags:
+        - User
+      summary: delete histoy search key word
+      description: delete histoy search key word
+      parameters:
+        - name: Customer-Id
+          description: if user not login, Customer-Id is required
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+        '406':
+          description: 'Not Acceptable'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: "Not Acceptable"
+                    description: 'Item not exist'             
 components:
   schemas:
     AuthAdmin:
