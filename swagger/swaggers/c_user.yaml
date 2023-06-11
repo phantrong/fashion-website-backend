@@ -547,6 +547,15 @@
                       admin_name:
                         type: string
                         example: 'admin_name'
+                      admin_phone:
+                        type: string
+                        example: '0123456789'
+                      admin_email:
+                        type: string
+                        example: 'admin_email@gmail.com'
+                      is_interested:
+                        type: number
+                        example: 1
                       total_view_times:
                         type: integer
                         example: 1

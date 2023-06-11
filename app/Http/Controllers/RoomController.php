@@ -309,6 +309,8 @@ class RoomController extends Controller
     public function getListSearchByUser(Request $request)
     {
         try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $conditions = $request->only([
                 'admin_id',
                 'room_type_id',
@@ -327,11 +329,10 @@ class RoomController extends Controller
             ]);
             $conditions['per_page'] = $request->per_page ?? $this->perpage;
             $conditions['page'] = $request->page ?? 1;
+            $conditions['user_id'] = $dataUser['user_id'];
+            $conditions['customer_id'] = $dataUser['customer_id'];
 
-            $dataUser = $this->getCustomerIdOrUserId($request);
-            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
-
-            if ($conditions['key_word']) {
+            if (@$conditions['key_word']) {
                 Business::getHistorySearchKeyWord()->createOrUpdate(
                     $conditions['key_word'],
                     $dataUser['user_id'],
@@ -350,7 +351,12 @@ class RoomController extends Controller
     public function getDetailByUser(Request $request, $id)
     {
         try {
-            $room = Business::getRoom()->getDetailByUser($id, []);
+            // view time
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+            $conditions['user_id'] = $dataUser['user_id'];
+            $conditions['customer_id'] = $dataUser['customer_id'];
+            $room = Business::getRoom()->getDetailByUser($id, $conditions);
 
             if (!$room) {
                 return $this->response()->errorCode(
@@ -358,10 +364,6 @@ class RoomController extends Controller
                     JsonResponse::HTTP_NOT_ACCEPTABLE
                 );
             }
-
-            // view time
-            $dataUser = $this->getCustomerIdOrUserId($request);
-            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $dataView = [
                 'address_ip' => $request->ip(),
                 'user_agent' => $request->header('User-Agent'),
@@ -397,6 +399,8 @@ class RoomController extends Controller
     public function getListRelatedByDetail(Request $request, $id)
     {
         try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
             $room = Business::getRoom()->getDetailByUser($id, []);
 
             if (!$room) {
@@ -415,6 +419,8 @@ class RoomController extends Controller
                 'ward_id' => $room->ward_id,
                 'not_in_ids' => [$room->id]
             ];
+            $conditions['user_id'] = $dataUser['user_id'];
+            $conditions['customer_id'] = $dataUser['customer_id'];
 
             $rooms = Business::getRoom()->getListSearchByUser($conditions);
 
@@ -439,6 +445,8 @@ class RoomController extends Controller
                 'page' => $request->page ?? 1,
                 'in_ids' => $roomIds
             ];
+            $conditions['user_id'] = $dataUser['user_id'];
+            $conditions['customer_id'] = $dataUser['customer_id'];
 
             $rooms = Business::getRoom()->getListSearchByUser($conditions);
 
@@ -489,6 +497,48 @@ class RoomController extends Controller
             return $this->response()->success();
         } catch (\Exception $exception) {
             Log::error(['deleteHistorySearchKeyWord Room']);
+            throw $exception;
+        }
+    }
+
+    public function getListSuggestion(Request $request)
+    {
+        try {
+            $dataUser = $this->getCustomerIdOrUserId($request);
+            if (!$dataUser) return Service::response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+            $conditions = $request->only([
+                'admin_id',
+                'room_type_id',
+                'province_id',
+                'district_id',
+                'ward_id',
+                'is_negotiate',
+                'start_cost',
+                'end_cost',
+                'start_acreage',
+                'end_acreage',
+                'key_word',
+                'order_by_created_at',
+                'order_by_cost',
+                'order_by_acreage'
+            ]);
+            $conditions['per_page'] = $request->per_page ?? $this->perpage;
+            $conditions['page'] = $request->page ?? 1;
+            $conditions['user_id'] = $dataUser['user_id'];
+            $conditions['customer_id'] = $dataUser['customer_id'];
+
+            if (@$conditions['key_word']) {
+                Business::getHistorySearchKeyWord()->createOrUpdate(
+                    $conditions['key_word'],
+                    $dataUser['user_id'],
+                    $dataUser['customer_id'],
+                );
+            }
+
+            $rooms = Business::getRoom()->getListSearchByUser($conditions);
+            return $this->response()->success($rooms);
+        } catch (\Exception $exception) {
+            Log::error(['getListSuggestion Room']);
             throw $exception;
         }
     }

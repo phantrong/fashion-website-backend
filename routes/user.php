@@ -29,6 +29,7 @@ Route::controller(RoomController::class)
         Route::get('detail/{id}', 'getDetailByUser')->name('detail');
         Route::get('list-related/{id}', 'getListRelatedByDetail')->name('list.related');
         Route::get('list-history-view', 'getListRoomHistoryViewByUser')->name('list.history.view');
+        Route::get('list-suggestion', 'getListSuggestion')->name('list.suggestion');
         Route::get('count/by-address', 'getCountRoomByAddressHomepage')->name('count.by_address');
     });
 

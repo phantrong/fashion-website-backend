@@ -6,6 +6,8 @@ use App\Enum\AdminEnum;
 use App\Enum\RoomEnum;
 use App\Models\Admin;
 use App\Models\District;
+use App\Models\InterestedRoom;
+use App\Models\InterestedRoomItem;
 use App\Models\Province;
 use App\Models\Room;
 use App\Models\Ward;
@@ -115,7 +117,9 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $districtTable = District::getTableName();
         $wardTable = Ward::getTableName();
         $adminTable = Admin::getTableName();
-
+        $interestedRoomTable = InterestedRoom::getTableName();
+        $interestedRoomItemTable = InterestedRoomItem::getTableName();
+        
         return $this->model->select([
             "$roomTable.id",
             "$roomTable.title",
@@ -140,6 +144,19 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             ->join($districtTable, "$districtTable.id", '=', "$roomTable.district_id")
             ->join($wardTable, "$wardTable.id", '=', "$roomTable.ward_id")
             ->join($adminTable, "$adminTable.id", '=', "$roomTable.admin_id")
+            ->when(
+                @$condition['user_id'] || @$condition['customer_id'],
+                function ($query) use ($condition, $roomTable, $interestedRoomItemTable, $interestedRoomTable) {
+                    $query->leftJoin($interestedRoomItemTable, "$interestedRoomItemTable.room_id", '=', "$roomTable.id")
+                    ->leftJoin($interestedRoomTable, function ($join)
+                        use ($condition, $interestedRoomItemTable, $interestedRoomTable) {
+                        $join->on("$interestedRoomItemTable.interested_room_id", '=', "$interestedRoomTable.id")
+                            ->where("$interestedRoomTable.user_id", @$condition['user_id'])
+                            ->where("$interestedRoomTable.customer_id", @$condition['customer_id']);
+                    })
+                    ->addSelect(DB::raw("CASE WHEN $interestedRoomTable.id is not null THEN 1 ELSE 0 END as is_interested"));
+                }
+            )
             ->where("$roomTable.status", RoomEnum::STATUS_SHOW)
             ->where("$adminTable.status", AdminEnum::STATUS_ACTIVE)
             ->when(
@@ -205,7 +222,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             use ($condition, $roomTable, $provinceTable, $districtTable, $wardTable) {
                 $query->where(function ($query)
                 use ($condition, $roomTable, $provinceTable, $districtTable, $wardTable) {
-                    $query->where("$roomTable.title", 'like', '%' . $condition['key_word'] . '%')
+                    $query->orWhere("$roomTable.title", 'like', '%' . $condition['key_word'] . '%')
                         ->orWhere("$roomTable.more_description", 'like', '%' . $condition['key_word'] . '%')
                         ->orWhere("$provinceTable.name", 'like', '%' . $condition['key_word'] . '%')
                         ->orWhere("$districtTable.name", 'like', '%' . $condition['key_word'] . '%')
@@ -247,6 +264,8 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $districtTable = District::getTableName();
         $wardTable = Ward::getTableName();
         $adminTable = Admin::getTableName();
+        $interestedRoomTable = InterestedRoom::getTableName();
+        $interestedRoomItemTable = InterestedRoomItem::getTableName();
 
         return $this->model->select([
             "$roomTable.id",
@@ -269,13 +288,28 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             "$roomTable.created_at",
             "$roomTable.updated_at",
             "$adminTable.id as admin_id",
-            "$adminTable.name as admin_name"
+            "$adminTable.name as admin_name",
+            "$adminTable.phone as admin_phone",
+            "$adminTable.email as admin_email",
         ])
             ->join($provinceTable, "$provinceTable.id", '=', "$roomTable.province_id")
             ->join($districtTable, "$districtTable.id", '=', "$roomTable.district_id")
             ->join($wardTable, "$wardTable.id", '=', "$roomTable.ward_id")
             ->join($adminTable, "$adminTable.id", '=', "$roomTable.admin_id")
             ->where("$roomTable.id", $id)
+            ->when(
+                @$condition['user_id'] || @$condition['customer_id'],
+                function ($query) use ($condition, $roomTable, $interestedRoomItemTable, $interestedRoomTable) {
+                    $query->leftJoin($interestedRoomItemTable, "$interestedRoomItemTable.room_id", '=', "$roomTable.id")
+                    ->leftJoin($interestedRoomTable, function ($join)
+                        use ($condition, $interestedRoomItemTable, $interestedRoomTable) {
+                        $join->on("$interestedRoomItemTable.interested_room_id", '=', "$interestedRoomTable.id")
+                            ->where("$interestedRoomTable.user_id", @$condition['user_id'])
+                            ->where("$interestedRoomTable.customer_id", @$condition['customer_id']);
+                    })
+                    ->addSelect(DB::raw("CASE WHEN $interestedRoomTable.id is not null THEN 1 ELSE 0 END as is_interested"));
+                }
+            )
             ->where("$roomTable.status", RoomEnum::STATUS_SHOW)
             ->where("$adminTable.status", AdminEnum::STATUS_ACTIVE)
             ->with([

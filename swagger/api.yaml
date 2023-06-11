@@ -1648,6 +1648,15 @@ paths:
                       admin_name:
                         type: string
                         example: 'admin_name'
+                      admin_phone:
+                        type: string
+                        example: '0123456789'
+                      admin_email:
+                        type: string
+                        example: 'admin_email@gmail.com'
+                      is_interested:
+                        type: number
+                        example: 1
                       total_view_times:
                         type: integer
                         example: 1
@@ -2501,6 +2510,15 @@ components:
               updated_at:
                 type: string
                 example: '2023/01/04 14:45'
+              admin_id:
+                type: number
+                example: 1
+              admin_name:
+                type: string
+                example: 'admin_name'
+              is_interested:
+                type: number
+                example: 1
               room_type:
                 type: object
                 properties:

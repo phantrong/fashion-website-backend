@@ -142,6 +142,15 @@
               updated_at:
                 type: string
                 example: '2023/01/04 14:45'
+              admin_id:
+                type: number
+                example: 1
+              admin_name:
+                type: string
+                example: 'admin_name'
+              is_interested:
+                type: number
+                example: 1
               room_type:
                 type: object
                 properties:
