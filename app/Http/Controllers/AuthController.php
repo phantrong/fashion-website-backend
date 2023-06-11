@@ -73,7 +73,7 @@ class AuthController extends Controller
                     'email' => $dataRequest['email'],
                     'password' => Hash::make(bin2hex(random_bytes(10))),
                     'status' => UserEnum::STATUS_ACTIVE,
-                    'notifications_email' => 1,
+                    'notifications_email' => UserEnum::NOTIFICATION_BY_EMAIL,
                     'google_id' => Hash::make($dataRequest['sub']),
                 ];
 

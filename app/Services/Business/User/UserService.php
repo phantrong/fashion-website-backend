@@ -87,4 +87,15 @@ class UserService extends BasesBusiness implements UserServiceInterface
 
         return $user;
     }
+
+    /**
+     * List all users.
+     *
+     * @param array $condition
+     * @return array
+     */
+    public function getAllList(array $condition, $columns = UserEnum::COLUMNS_SELECT)
+    {
+        return Repository::getUser()->getList($condition, $columns);
+    }
 }

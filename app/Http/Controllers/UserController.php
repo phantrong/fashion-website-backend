@@ -106,6 +106,8 @@ class UserController extends Controller
         try {
             $user = $this->getAuth($request);
 
+            $user = Business::getUser()->find($user->id);
+
             $input = $request->only([
                 'avatar',
                 'first_name',

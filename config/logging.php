@@ -85,7 +85,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
         ],
 
@@ -132,10 +132,18 @@ return [
             'days' => 7,
             'permission' => 0640,
         ],
-        
+
         'email_verify' => [
             'driver' => 'daily',
             'path' => storage_path('logs/send_email/email_verify.log'),
+            'level' => 'info',
+            'days' => 7,
+            'permission' => 0640,
+        ],
+
+        'email_new_room' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/send_email/email_new_room.log'),
             'level' => 'info',
             'days' => 7,
             'permission' => 0640,

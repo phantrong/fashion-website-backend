@@ -15,6 +15,9 @@ class UserEnum
         self::STATUS_BLOCK,
     ];
 
+    const NOTIFICATION_BY_EMAIL = 1;
+    const NOT_NOTIFICATION_BY_EMAIL = 0;
+
     const COLUMNS_SELECT = [
         'id',
         'first_name',

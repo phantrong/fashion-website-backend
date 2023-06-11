@@ -1404,9 +1404,6 @@ paths:
                   type: string
                 notifications_email:
                   type: number
-              required:
-                - last_name
-                - notifications_email
       responses:
         '200':
           description: successful User

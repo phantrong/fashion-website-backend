@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Enum\CommonEnum;
+use App\Enum\LogEnum;
 use App\Enum\RoomEnum;
 use App\Http\Requests\FileMediaRequest;
 use App\Http\Requests\RoomRequest;
+use App\Jobs\SendMailNewRoomToUser;
 use App\Services\Business;
 use App\Services\Service;
 use Illuminate\Http\JsonResponse;
@@ -138,7 +140,19 @@ class RoomController extends Controller
             if (!empty($roomMedias)) {
                 Business::getRoomMedia()->insert($roomMedias);
             }
+            if ($room->status == RoomEnum::STATUS_SHOW) {
+                $room->is_sent_mail_to_user = 1;
+                $room->save();
+            }
             DB::commit();
+
+            if ($room->status == RoomEnum::STATUS_SHOW) {
+                log_dispatch_email('email users', LogEnum::LOG_EMAIL_NEW_ROOM, [
+                    'room' => $room
+                ]);
+                SendMailNewRoomToUser::dispatch($room)->onQueue(LogEnum::QUEUE_EMAIL);
+            }
+
             return $this->response()->success($room);
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -181,6 +195,9 @@ class RoomController extends Controller
                 'more_description',
                 'status'
             ]);
+
+            $statusOld = $room->status;
+            $statusNew = @$data['status'];
 
             $room->update($data);
 
@@ -254,7 +271,20 @@ class RoomController extends Controller
             if (!empty($roomMedias)) {
                 Business::getRoomMedia()->insert($roomMedias);
             }
+            if ($statusOld != $statusNew && $statusNew == RoomEnum::STATUS_SHOW) {
+                $room->is_sent_mail_to_user = 1;
+                $room->save();
+            }
+
             DB::commit();
+
+            if ($statusOld != $statusNew && $statusNew == RoomEnum::STATUS_SHOW) {
+                log_dispatch_email('email users', LogEnum::LOG_EMAIL_NEW_ROOM, [
+                    'room' => $room
+                ]);
+                SendMailNewRoomToUser::dispatch($room)->onQueue(LogEnum::QUEUE_EMAIL);
+            }
+
             return $this->response()->success($room);
         } catch (\Exception $exception) {
             DB::rollBack();
