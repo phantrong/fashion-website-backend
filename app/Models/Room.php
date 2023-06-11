@@ -37,6 +37,7 @@ class Room extends Model
         'room_type_id',
         'more_description',
         'status',
+        'is_sent_mail_to_user',
         'admin_id'
     ];
 

@@ -21,6 +21,7 @@ class RoomEnum
         'room_type_id',
         'more_description',
         'status',
+        'is_sent_mail_to_user',
     ];
 
     const MAX_NUMBER_VIDEO_AND_IMAGE = 10;
