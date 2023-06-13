@@ -1222,3 +1222,44 @@
                     example: "Success"
                   data:
                     $ref: '#/components/schemas/RoomDataList'
+  /s2/contact/send:
+    post:
+      tags:
+        - User
+      summary: send contact to admin
+      description: send contact to admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                content:
+                  type: string
+                type:
+                  type: number
+                  description: "1: comments, 2: coopertation contact"
+              required:
+                - name
+                - email
+                - content
+                - type
+      responses:
+        '200':
+          description: successful User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/Contact'

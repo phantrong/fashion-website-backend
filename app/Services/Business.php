@@ -36,6 +36,8 @@ use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordService;
 use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordServiceInterface;
 use App\Services\Business\InterestedRoomInfomation\InterestedRoomInfomationService;
 use App\Services\Business\InterestedRoomInfomation\InterestedRoomInfomationServiceInterface;
+use App\Services\Business\Contact\ContactService;
+use App\Services\Business\Contact\ContactServiceInterface;
 
 class Business
 {
@@ -207,5 +209,15 @@ class Business
     public static function getInterestedRoomInfomation()
     {
         return app(InterestedRoomInfomationServiceInterface::class);
+    }
+
+    /**
+     * Get ContactService.
+     *
+     * @return ContactService
+     */
+    public static function getContact()
+    {
+        return app(ContactServiceInterface::class);
     }
 }

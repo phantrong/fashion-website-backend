@@ -38,6 +38,8 @@ use App\Repositories\InterestedRoomInfomation\InterestedRoomInfomationRepository
 use App\Repositories\InterestedRoomInfomation\InterestedRoomInfomationRepositoryInterface;
 use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepository;
 use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepositoryInterface;
+use App\Repositories\Contact\ContactRepository;
+use App\Repositories\Contact\ContactRepositoryInterface;
 
 class Repository
 {
@@ -219,5 +221,15 @@ class Repository
     public static function getInterestedRoomInfomation()
     {
         return app(InterestedRoomInfomationRepositoryInterface::class);
+    }
+
+    /**
+     * Get ContactRepository.
+     *
+     * @return ContactRepository
+     */
+    public static function getContact()
+    {
+        return app(ContactRepositoryInterface::class);
     }
 }

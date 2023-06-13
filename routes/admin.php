@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HousewareController;
 use App\Http\Controllers\RoomController;
 use App\Http\Middleware\Adminer;
@@ -38,5 +39,14 @@ Route::group([
             Route::post('create', 'createByAdmin')->name('admin.create');
             Route::post('update/{id}', 'updateByAdmin')->name('admin.update');
             Route::delete('delete/{id}', 'deleteByAdmin')->name('admin.delete');
+        });
+
+    Route::controller(ContactController::class)
+        ->prefix('contact')
+        ->name('contact.')
+        ->group(function () {
+            Route::get('list', 'getList')->name('list');
+            Route::get('{id}', 'getDetail')->name('detail');
+            Route::delete('delete/{id}', 'delete')->name('delete');
         });
 });

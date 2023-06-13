@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRepositoryInterface;
+use App\Repositories\Contact\ContactRepository;
+use App\Repositories\Contact\ContactRepositoryInterface;
 use App\Repositories\District\DistrictRepository;
 use App\Repositories\District\DistrictRepositoryInterface;
 use App\Repositories\HistorySearchKeyWord\HistorySearchKeyWordRepository;
@@ -120,6 +122,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             InterestedRoomInfomationRepositoryInterface::class,
             InterestedRoomInfomationRepository::class
+        );
+        $this->app->singleton(
+            ContactRepositoryInterface::class,
+            ContactRepository::class
         );
     }
 }

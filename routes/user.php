@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomepageAccessTimeController;
 use App\Http\Controllers\InterestedRoomController;
 use App\Http\Controllers\RoomController;
@@ -41,6 +42,13 @@ Route::controller(InterestedRoomController::class)
         Route::post('remove', 'removeItem')->name('remove.item');
         Route::get('list', 'getListByUser')->name('list');
         Route::get('list-detail', 'getListDetailByUser')->name('list.detail');
+    });
+
+Route::controller(ContactController::class)
+    ->prefix('contact')
+    ->name('contact.')
+    ->group(function () {
+        Route::post('send', 'sendByUser')->name('send');
     });
 
 // authen user

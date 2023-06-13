@@ -1,0 +1,28 @@
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          nullable: true
+          example: "name"
+        email:
+          type: string
+          nullable: true
+          example: "contact@example.com"
+        content:
+          type: string
+          example: "This is content"
+        type:
+          type: integer
+          example: 1
+          description: '1: comments, 2: coopertation contact'
+        is_sent_mail:
+          type: integer
+          example: 1
+          description: '0: not, 1: sent'
+        created_at:
+          type: string
+          example: '2023-01-04 14:45:00'

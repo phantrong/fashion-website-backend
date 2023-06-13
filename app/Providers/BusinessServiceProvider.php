@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\Business\Admin\AdminService;
 use App\Services\Business\Admin\AdminServiceInterface;
+use App\Services\Business\Contact\ContactService;
+use App\Services\Business\Contact\ContactServiceInterface;
 use App\Services\Business\District\DistrictService;
 use App\Services\Business\District\DistrictServiceInterface;
 use App\Services\Business\HistorySearchKeyWord\HistorySearchKeyWordService;
@@ -114,6 +116,10 @@ class BusinessServiceProvider extends ServiceProvider
         $this->app->bind(
             InterestedRoomInfomationServiceInterface::class,
             InterestedRoomInfomationService::class
+        );
+        $this->app->bind(
+            ContactServiceInterface::class,
+            ContactService::class
         );
     }
 }

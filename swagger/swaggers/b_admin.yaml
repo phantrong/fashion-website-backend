@@ -966,3 +966,176 @@
                     example: "Success"
         '403':
           description: 'Forbidden'
+  /s1/contact/list:
+    get:
+      tags:
+        - Admin
+      security:
+        - bearerAuth: []
+      summary: Get List Contact
+      description: Get List Contact
+      parameters:
+        - name: User-Role
+          in: header
+          description: '1: Admin'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        - name: key_word
+          in: query
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        total:
+                          type: integer
+                          example: 1
+                        per_page:
+                          type: integer
+                          example: 1
+                        page:
+                          type: integer
+                          example: 1
+                        last_page:
+                          type: integer
+                          example: 1
+                        contacts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "name"
+                              email:
+                                type: string
+                                example: 'contact@example.com'
+                              created_at:
+                                type: string
+                                example: '2023-01-04 14:45:00'
+        '401':
+          description: 'Token invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: 'Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+  /s1/contact/{id}:
+    get:
+      tags:
+        - Admin
+      security:
+        - bearerAuth: []
+      summary: Get Detail Contact
+      description: Get Detail Contact
+      parameters:
+        - name: User-Role
+          in: header
+          description: '1: Admin'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          example: 1
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: '#/components/schemas/Contact'
+        '401':
+          description: 'Token invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: 'Token invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+  /s1/contact/delete/{id}:
+    delete:
+      tags:
+        - Admin
+      security:
+        - bearerAuth: [ ]
+      summary: Delete Contact
+      description: Delete Contact
+      parameters:
+        - name: User-Role
+          in: header
+          description: '1: Admin'
+          required: true
+          example: 1
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          example: 1
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: "Success"
+        '403':
+          description: 'Forbidden'
