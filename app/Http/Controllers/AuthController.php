@@ -55,15 +55,19 @@ class AuthController extends Controller
             $user = Business::getUser()->getUserByEmail($dataRequest['email'], ['*']);
 
             if ($user) {
-                if ($user->status == AdminEnum::STATUS_NEW || !Hash::check($dataRequest['sub'], $user->google_id)) {
-                    return $this->response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
-                }
-                if ($user->status == AdminEnum::STATUS_BLOCK) {
-                    return $this->response()->errorCode(__('message.user.blocked'), JsonResponse::HTTP_NOT_ACCEPTABLE);
-                }
                 if (!$user->google_id) {
                     $user->google_id = Hash::make($dataRequest['sub']);
                     $user->save();
+                } else {
+                    if ($user->status == AdminEnum::STATUS_NEW || !Hash::check($dataRequest['sub'], $user->google_id)) {
+                        return $this->response()->error(__('message.error.401'), JsonResponse::HTTP_UNAUTHORIZED);
+                    }
+                    if ($user->status == AdminEnum::STATUS_BLOCK) {
+                        return $this->response()->errorCode(
+                            __('message.user.blocked'),
+                            JsonResponse::HTTP_NOT_ACCEPTABLE
+                        );
+                    }
                 }
             } else {
                 $newUser = [
