@@ -333,6 +333,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $adminTable = Admin::getTableName();
 
         return $this->model->select(
+            "$districtTable.id as district_id",
             "$districtTable.name as district_name",
             DB::raw("count($roomTable.id) as count_room"),
         )
