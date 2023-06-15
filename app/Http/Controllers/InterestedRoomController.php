@@ -56,7 +56,7 @@ class InterestedRoomController extends Controller
             
             Business::getInterestedRoomItem()->removeItem([
                 'interested_room_id' => $interestedRooms->id,
-                'item_id' => $request->item_id,
+                'room_id' => $request->room_id,
             ]);
 
             return $this->response()->success();

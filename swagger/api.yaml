@@ -2007,7 +2007,7 @@ paths:
             schema:
               type: object
               properties:
-                item_id:
+                room_id:
                   type: number
       parameters:
         - name: Customer-Id
@@ -2345,9 +2345,12 @@ paths:
                         items:
                           type: object
                           properties:
-                            district_name:
+                            district_id:
                               type: integer
                               example: 1
+                            district_name:
+                              type: string
+                              example: 'district_name'
                             count_room:
                               type: integer
                               example: 1
