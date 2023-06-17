@@ -1,8 +1,0 @@
-2023-05-27 23:47:11,655 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2023-05-27 23:47:11,659 INFO supervisord started with pid 7
-2023-05-27 23:47:12,664 INFO spawned: 'laravel_send_email_00' with pid 8
-2023-05-27 23:47:13,666 INFO success: laravel_send_email_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2023-05-28 12:08:52,351 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2023-05-28 12:08:52,357 INFO supervisord started with pid 7
-2023-05-28 12:08:53,363 INFO spawned: 'laravel_send_email_00' with pid 8
-2023-05-28 12:08:54,368 INFO success: laravel_send_email_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
