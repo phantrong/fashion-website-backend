@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         Admin::create([
-            'name' => 'Vũ Quốc Huy',
+            'name' => 'Nguyễn Đình Thi',
             'type' => AdminEnum::TYPE_ROOT_ADMIN,
             'phone' => '0968724069',
             'email' => 'thuephongtrotth@gmail.com',

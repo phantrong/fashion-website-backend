@@ -21,7 +21,9 @@ php artisan storage:link
 php artisan config:clear
 php artisan config:cache
 php artisan optimize
-php artisan db:seed
+php artisan migrate
 php artisan vietnamzone:import
+php artisan db:seed  // for default data
+php artisan db:seed FakeSeeder // for fake data
 php artisan swagger:write
 ```
