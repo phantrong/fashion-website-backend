@@ -3,5 +3,6 @@ info:
   title: ThuePhongTro_TTH API
   description: ""
 servers:
+  - url: https://api.thuephongtro-tth.com
   - url: http://localhost:8081
 paths:
