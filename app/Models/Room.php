@@ -48,12 +48,6 @@ class Room extends Model
         'title',
         'address_detail',
         'more_description'
-        // 'rooms.title',
-        // 'rooms.address_detail',
-        // 'rooms.more_description',
-        // 'provinces.name',
-        // 'districts.name',
-        // 'wards.name',
     ];
 
     public function admin()
@@ -98,6 +92,6 @@ class Room extends Model
 
     public function firstImage()
     {
-        return $this->medias()->where('type', RoomMediaEnum::MEDIA_IMAGE_TYPE)->limit(1);
+        return $this->hasOne(RoomMedia::class);
     }
 }
