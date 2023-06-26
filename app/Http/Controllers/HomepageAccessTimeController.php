@@ -13,7 +13,7 @@ class HomepageAccessTimeController extends Controller
         try {
             // access time
             $dataAccess = [
-                'address_ip' => $request->ip(),
+                'address_ip' => get_client_ip(),
                 'user_agent' => $request->header('User-Agent')
             ];
 
